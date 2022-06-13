@@ -1,0 +1,12 @@
+{
+    "name": "jobsbook",
+    "engines": {
+      "npm": "8.3.0",
+      "node": "17.3.0"
+    },
+    "scripts": {
+      "build": "cd client && npm install && npm run build && cd ..",
+      "deploy": "cp -a client/build/. public/",
+      "postinstall": "npm run build && npm run deploy && echo 'Client built!'"
+    }
+  }
