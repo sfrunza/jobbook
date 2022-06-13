@@ -9,6 +9,7 @@ import Select from '@mui/material/Select';
 import Chip from '@mui/material/Chip';
 import { useField } from 'formik';
 import useSWR from 'swr';
+import { useSelector } from 'store';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -27,6 +28,7 @@ export default function CrewSelectField(props) {
   const { errorText, ...rest } = props;
   const [field, meta] = useField(props);
   const { data, error } = useSWR('/api/v1/users', fetcher);
+  const { user } = useSelector((state) => state.auth);
   const users = data?.users;
 
   return (
@@ -59,15 +61,17 @@ export default function CrewSelectField(props) {
             )}
             MenuProps={MenuProps}
           >
-            {users.map((user, i) => (
-              <MenuItem
-                key={i}
-                value={user.username}
-                //   style={getStyles(user, personName, theme)}
-              >
-                {user.username}
-              </MenuItem>
-            ))}
+            {users
+              .filter((u) => u.id !== user.id)
+              .map((user, i) => (
+                <MenuItem
+                  key={i}
+                  value={user.username}
+                  //   style={getStyles(user, personName, theme)}
+                >
+                  {user.username}
+                </MenuItem>
+              ))}
           </Select>
         </FormControl>
       )}
