@@ -6,9 +6,8 @@ class SessionsController < Devise::SessionsController
     return invalid_login_attempt unless @user
 
     if @user.valid_password?(user_params[:password])
-      @user.update(active: true)
       sign_in :user, @user
-      redirect_to api_v1_users_path
+      redirect_to "/"
     else
       render json: {
                status: 401,
@@ -19,7 +18,6 @@ class SessionsController < Devise::SessionsController
 
   def destroy
     @user = User.find(current_user.id)
-    @user.update(active: false)
     sign_out(@user)
     render :json => { :success => true }
   end

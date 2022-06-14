@@ -1,11 +1,11 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
 import { alpha, useTheme } from '@mui/material/styles';
 import MenuIcon from '@mui/icons-material/Menu';
 import { UserPopover } from './components';
 import { Link } from 'react-router-dom';
-import { Typography } from '@mui/material';
 
 const Topbar = ({ onSidebarOpen }) => {
   const theme = useTheme();

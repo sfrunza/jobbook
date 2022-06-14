@@ -7,10 +7,10 @@ class Api::V1::JobsController < ApplicationController
     if current_user && current_user.admin
       #   @jobs = Job.all.order("id DESC")
       #   render json: @jobs
-      @jobs = current_user.jobs.order("id DESC")
+      @jobs = current_user.jobs.order("date DESC")
       render json: @jobs
     elsif current_user
-      @jobs = current_user.jobs.order("id DESC")
+      @jobs = current_user.jobs.order("date DESC")
       render json: @jobs
     else
       render json: { current_user: nil, message: "Please sign in.", status: 401, logged_in: false }

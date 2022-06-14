@@ -83,23 +83,20 @@ const slice = createSlice({
 export const { reducer } = slice;
 
 export const loginUser = (user, navigate) => (dispatch) => {
+  dispatch(slice.actions.loginRequest());
   axios
     .post('/users/sign_in', { user }, { withCredentials: true })
-    .then((res) => {
-      // console.log(res);
-      if (res.data.current_user) {
-        let user = res.data.current_user;
+    .then((response) => {
+      console.log(response);
+      if (response.data.status === undefined) {
+        let user = response.data.current_user;
         dispatch(slice.actions.loginSuccess(user));
         navigate('/');
       } else {
-        // console.log(res.data.errors);
-        dispatch(slice.actions.loginFailure(res.data.errors));
+        dispatch(slice.actions.loginFailure(response.data.errors));
       }
-      return res.json;
     })
-    .then((data) => console.log(data))
     .catch((error) => {
-      // console.log(error);
       dispatch(slice.actions.loginFailure(error.message));
     });
 };

@@ -17,7 +17,7 @@ import { LoadingButton } from '@mui/lab';
 const range = (start, stop, step) =>
   Array.from({ length: (stop - start) / step + 1 }, (_, i) => start + i * step);
 
-const timeArray = [...range(1, 20, 0.25)];
+const timeArray = [...range(0.25, 20, 0.25)];
 
 export default function FormPage({ edit = false, job, handleEdit }) {
   const { mutate } = useSWRConfig();

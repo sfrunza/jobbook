@@ -1,7 +1,7 @@
 class Api::V1::UsersController < ApplicationController
   before_action :set_users, only: %i[ show edit update destroy ]
-  before_action :authenticate_user!
-  wrap_parameters :user, include: [:first_name, :last_name, :role, :username, :email, :password, :password_confirmation]
+  # before_action :authenticate_user!
+  wrap_parameters :user, include: [:first_name, :last_name, :role, :username, :email, :password, :password_confirmation, :reset_password_token]
 
   def index
     if current_user
@@ -49,6 +49,29 @@ class Api::V1::UsersController < ApplicationController
     @user = User.find(params[:user_id])
     @jobs = @user.jobs.order("id DESC")
     render json: @jobs
+  end
+
+  def reset
+    @token = params[:token]
+
+    if params[:email].blank?
+      return render json: { error: "Token not present" }
+    end
+
+    @user = User.find_by(email: params[:email])
+
+    puts @token
+    puts @user
+
+    if @user.present? && @user.password_token_valid?
+      if @user.reset_password!(params[:password])
+        render json: { status: "ok" }, status: :ok
+      else
+        render json: { error: @user.errors.full_messages, status: :unprocessable_entity }
+      end
+    else
+      render json: { error: ["Link not valid or expired. Try generating a new link."] }, status: :not_found
+    end
   end
 
   def new
@@ -106,6 +129,6 @@ class Api::V1::UsersController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def user_params
-    params.fetch(:user, {}).permit(:id, :first_name, :last_name, :email, :role, :admin, :username, :password, :password_confirmation)
+    params.fetch(:user, {}).permit(:id, :first_name, :last_name, :email, :role, :admin, :username, :password, :password_confirmation, :reset_password_token)
   end
 end

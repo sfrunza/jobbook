@@ -4,6 +4,7 @@ import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import MobileDatePicker from '@mui/lab/MobileDatePicker';
 import { styled } from '@mui/material/styles';
+import { DesktopDatePicker } from '@mui/lab';
 
 const StyledTextField = styled((props) => <TextField {...props} />)(
   ({ theme }) => ({
@@ -46,41 +47,50 @@ export default function DatePickerField(props) {
 
   return (
     <Grid container sx={{ flexDirection: { xs: 'column', md: 'row' } }}>
-      {/* <Grid item md={4} xs={12}>
-        <Typography
-          variant={'subtitle1'}
-          fontWeight={600}
-          gutterBottom
-          htmlFor={props.field}
-        >
-          {props.label}
-        </Typography>
-      </Grid> */}
       <Grid item xs={12}>
-        <MobileDatePicker
+        <DesktopDatePicker
           {...field}
           {...rest}
-          // inputFormat="MMM dd, yyyy"
           value={selectedDate}
           onChange={_onChange}
-          disablePast
+          InputAdornmentProps={{
+            position: 'end',
+            variant: 'standard',
+            size: 'large',
+          }}
+          renderInput={(params) => (
+            <StyledTextField
+              {...params}
+              error={isError}
+              fullWidth
+              size="small"
+              label={props.label}
+              inputProps={{
+                ...params.inputProps,
+              }}
+            />
+          )}
+        />
+        {/* <MobileDatePicker
+          {...field}
+          {...rest}
+          value={selectedDate}
+          onChange={_onChange}
           renderInput={(params) => {
             return (
               <StyledTextField
                 {...params}
                 error={isError}
-                // helperText={isError && error}
                 fullWidth
                 size="small"
                 label={props.label}
                 inputProps={{
                   ...params.inputProps,
-                  // placeholder: props.label,
                 }}
               />
             );
           }}
-        />
+        /> */}
       </Grid>
     </Grid>
   );

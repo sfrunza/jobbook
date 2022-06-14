@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import LoginPage from './LoginPage';
 import PrivateRoute from './PrivateRoute';
 import { verifyAuth } from './slices/auth';
@@ -8,6 +8,10 @@ import { useSelector } from './store/index';
 import Jobs from 'pages/Jobs';
 import Employees from 'pages/Employees';
 import Employee from 'pages/Employee';
+import Spinner from './components/Spinner';
+import { Box } from '@mui/material';
+import ForgotPassword from './ForgotPassword';
+import NewPassword from './NewPassword';
 
 function App() {
   const dispatch = useDispatch();
@@ -20,13 +24,25 @@ function App() {
     dispatch(verifyAuth());
     setTimeout(() => {
       setAction(false);
-    }, 100);
+    }, 600);
   }, [dispatch, JSON.stringify(user)]);
 
-  if (action) return <>loading...</>;
+  if (action)
+    return (
+      <Box sx={{ '&> div': { height: '60vh' } }}>
+        <Spinner />
+      </Box>
+    );
+
   return (
     <Routes>
-      <Route path="/login" element={<LoginPage />} />
+      {user ? (
+        <Route path="*" element={<Navigate to="/" />} />
+      ) : (
+        <Route path="/login" element={<LoginPage />} />
+      )}
+      <Route path="/forgot-password" element={<ForgotPassword />} />
+      <Route path="/new_password" element={<NewPassword />} />
       <Route element={<PrivateRoute user={user} />}>
         <Route path="/" element={<Jobs />} />
         {user?.admin && (
@@ -36,6 +52,7 @@ function App() {
           </>
         )}
       </Route>
+      <Route path="*" element={<Navigate to="/" />} />
     </Routes>
   );
 }

@@ -1,6 +1,5 @@
 import React from 'react';
 import { Navigate, useLocation, Outlet } from 'react-router-dom';
-import { useSelector } from './store/index';
 
 export default function PrivateRoute({ user, children }) {
   let location = useLocation();
@@ -13,5 +12,5 @@ export default function PrivateRoute({ user, children }) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
-  return <Outlet />;
+  return children ? children : <Outlet />;
 }
