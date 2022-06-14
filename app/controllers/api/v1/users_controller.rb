@@ -1,6 +1,6 @@
 class Api::V1::UsersController < ApplicationController
   before_action :set_users, only: %i[ show edit update destroy ]
-  # before_action :authenticate_user!
+  before_action :authenticate_user!
   wrap_parameters :user, include: [:first_name, :last_name, :role, :username, :email, :password, :password_confirmation, :reset_password_token]
 
   def index
