@@ -21,7 +21,7 @@ export default function DatePickerField(props) {
   const isError = touched && Boolean(error);
   const { value } = field;
   const [selectedDate, setSelectedDate] = useState(null);
-  const { label = null, ...rest } = props;
+  const { label, ...rest } = props;
 
   useEffect(() => {
     if (value) {
@@ -63,33 +63,13 @@ export default function DatePickerField(props) {
               error={isError}
               fullWidth
               size="small"
-              label={props.label}
+              label={label}
               inputProps={{
                 ...params.inputProps,
               }}
             />
           )}
         />
-        {/* <MobileDatePicker
-          {...field}
-          {...rest}
-          value={selectedDate}
-          onChange={_onChange}
-          renderInput={(params) => {
-            return (
-              <StyledTextField
-                {...params}
-                error={isError}
-                fullWidth
-                size="small"
-                label={props.label}
-                inputProps={{
-                  ...params.inputProps,
-                }}
-              />
-            );
-          }}
-        /> */}
       </Grid>
     </Grid>
   );

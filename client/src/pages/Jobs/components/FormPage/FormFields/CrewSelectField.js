@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
@@ -26,8 +25,8 @@ const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
 export default function CrewSelectField(props) {
   const { errorText, ...rest } = props;
-  const [field, meta] = useField(props);
-  const { data, error } = useSWR('/api/v1/users', fetcher);
+  const [field] = useField(props);
+  const { data } = useSWR('/api/v1/users', fetcher);
   const { user } = useSelector((state) => state.auth);
   const users = data?.users;
 
@@ -42,8 +41,6 @@ export default function CrewSelectField(props) {
             labelId="team-chip-label"
             id="multiple-chip"
             multiple
-            // value={personName}
-            // onChange={handleChange}
             input={
               <OutlinedInput
                 id="select-multiple-chip"
@@ -64,11 +61,7 @@ export default function CrewSelectField(props) {
             {users
               .filter((u) => u.id !== user.id)
               .map((user, i) => (
-                <MenuItem
-                  key={i}
-                  value={user.username}
-                  //   style={getStyles(user, personName, theme)}
-                >
+                <MenuItem key={i} value={user.username}>
                   {user.username}
                 </MenuItem>
               ))}

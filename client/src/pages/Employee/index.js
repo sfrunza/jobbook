@@ -3,7 +3,7 @@ import Fixed from 'layouts/Fixed';
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import useSWR from 'swr';
-import { Box, Grid, Typography, Divider, Button, Card } from '@mui/material';
+import { Box, Grid, Typography, Divider, Button } from '@mui/material';
 import Spinner from 'components/Spinner';
 import JobList from './JobList';
 import CustomTabs from './CustomTabs';

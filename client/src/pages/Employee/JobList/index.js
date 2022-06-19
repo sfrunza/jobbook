@@ -9,11 +9,7 @@ import Paper from '@mui/material/Paper';
 import moment from 'moment';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import Spinner from 'components/Spinner';
 import { TableFooter } from '@mui/material';
-import useSWR from 'swr';
-// import DeleteDialog from './DeleteDialog';
-// import EditDialog from './EditDialog';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
