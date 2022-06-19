@@ -5,7 +5,7 @@ const pages = [
   },
   {
     title: 'Employees',
-    href: '/dashboard/employees',
+    href: '/employees',
   },
 ];
 

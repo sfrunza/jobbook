@@ -28,7 +28,7 @@ const getTheme = (mode, themeToggler) =>
         MuiIconButton: {
           styleOverrides: {
             root: {
-              backgroundColor: light.background.level2,
+              // backgroundColor: light.background.level2,
             },
           },
         },

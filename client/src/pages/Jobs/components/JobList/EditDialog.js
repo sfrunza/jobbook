@@ -54,9 +54,18 @@ export default function EditDialog({ job }) {
     }
   }
 
+  const ggg = {
+    width: { xs: '100px', md: '100' },
+    marginX: { xs: '16px', md: 'auto' },
+  };
+
   return (
     <div>
-      <IconButton size="small" onClick={handleClickOpen}>
+      <IconButton
+        size="small"
+        onClick={handleClickOpen}
+        sx={{ backgroundColor: 'background.level2' }}
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="h-6 w-6"
@@ -91,6 +100,7 @@ export default function EditDialog({ job }) {
               right: 8,
               top: 8,
               color: (theme) => theme.palette.grey[500],
+              backgroundColor: 'background.level2',
             }}
           >
             <svg

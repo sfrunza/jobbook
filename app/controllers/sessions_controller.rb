@@ -7,7 +7,7 @@ class SessionsController < Devise::SessionsController
 
     if @user.valid_password?(user_params[:password])
       sign_in :user, @user
-      redirect_to "/"
+      render :json => @user
     else
       render json: {
                status: 401,

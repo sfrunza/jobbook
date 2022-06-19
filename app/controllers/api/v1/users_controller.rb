@@ -1,6 +1,6 @@
 class Api::V1::UsersController < ApplicationController
   before_action :set_users, only: %i[ show edit update destroy ]
-  before_action :authenticate_user!
+  # before_action :authenticate_user!,  only: %i[ show edit update destroy filter_users user_jobs ]
   wrap_parameters :user, include: [:first_name, :last_name, :role, :username, :email, :password, :password_confirmation, :reset_password_token]
 
   def index
@@ -52,13 +52,9 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def reset
-    @token = params[:token]
-
-    if params[:email].blank?
-      return render json: { error: "Token not present" }
-    end
-
-    @user = User.find_by(email: params[:email])
+    @token = params[:token].to_s
+    
+    @user = User.with_reset_password_token(@token)
 
     puts @token
     puts @user

@@ -4,13 +4,14 @@ import {
 } from 'react-redux';
 
 import { configureStore } from '@reduxjs/toolkit';
-import { reducer as authReducer } from '../slices/auth';
+import { reducer as authReducer, verifyAuth } from '../slices/auth';
 
 export const store = configureStore({
   reducer: {
     auth: authReducer,
   },
 });
+store.dispatch(verifyAuth());
 
 export const useSelector = useReduxSelector;
 

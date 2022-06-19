@@ -10,7 +10,7 @@ import { loginUser } from 'slices/auth';
 
 const LoginPage = () => {
   let navigate = useNavigate();
-  let { isLoggingIn, error } = useSelector((state) => state.auth);
+  let { isLoggingIn, error, user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
   function handleSubmit(event) {
@@ -35,7 +35,7 @@ const LoginPage = () => {
           <Stack
             spacing={2}
             direction="column"
-            minWidth={{ xs: 350, md: 400 }}
+            minWidth={{ xs: '100%', sm: 400, md: 400 }}
             margin={'auto'}
           >
             {error && (
@@ -55,7 +55,14 @@ const LoginPage = () => {
             >
               {isLoggingIn ? 'Loading...' : 'Login'}
             </Button>
-            <Link to="/forgot-password">Forgot password</Link>
+            <Typography
+              component={Link}
+              to="/forgot-password"
+              variant="caption"
+              color="textSecondary"
+            >
+              Forgot password
+            </Typography>
           </Stack>
         </Box>
       </form>

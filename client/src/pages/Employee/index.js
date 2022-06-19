@@ -120,7 +120,7 @@ const Employee = (props) => {
           </TabPanel>
         )}
         {value === 2 && (
-          <TabPanel value={value} index={1}>
+          <TabPanel value={value} index={2}>
             asdasdasdas
           </TabPanel>
         )}

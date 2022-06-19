@@ -23,7 +23,6 @@ const NewPassword = () => {
       password: password,
       password_confirmation: passwordConfirmation,
       token: resetToken,
-      email: 'frunza.sergiu3@gmail.com',
     };
 
     fetch('/api/v1/reset', {
@@ -45,7 +44,10 @@ const NewPassword = () => {
           setShow(true);
         }
       })
-      .catch(console.log);
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+      });
   }
 
   return (
@@ -60,13 +62,20 @@ const NewPassword = () => {
           <Stack
             spacing={2}
             direction="column"
-            minWidth={{ xs: 350, md: 400 }}
+            minWidth={{ xs: '100%', sm: 400, md: 400 }}
             margin={'auto'}
           >
             <Typography sx={{ textAlign: 'center' }}>
-              Email changed !
+              Password changed!
             </Typography>
-            <Link to="/login">Go to Login page</Link>
+            <Typography
+              component={Link}
+              to="/login"
+              variant="caption"
+              color="textSecondary"
+            >
+              Go to Login page
+            </Typography>
           </Stack>
         </Box>
       ) : (
@@ -99,7 +108,14 @@ const NewPassword = () => {
               >
                 Change my password
               </LoadingButton>
-              <Link to="/login">Login</Link>
+              <Typography
+                component={Link}
+                to="/login"
+                variant="caption"
+                color="textSecondary"
+              >
+                Back to Login
+              </Typography>
             </Stack>
           </Box>
         </form>

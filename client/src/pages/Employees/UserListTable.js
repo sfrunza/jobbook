@@ -40,7 +40,7 @@ const UserListTable = (props) => {
                       <Avatar />
                     </Box>
                     <Box flexDirection="column">
-                      <Link to={`/dashboard/employees/${user.id}`}>
+                      <Link to={`/employees/${user.id}`}>
                         <Typography fontWeight={600}>
                           {user.first_name + ' ' + user.last_name} (
                           {user.username})

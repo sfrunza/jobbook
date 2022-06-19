@@ -54,7 +54,10 @@ const SidebarNav = ({ pages, onClose }) => {
         alignItems="center"
       >
         <Typography variant="h6">Raimond's Movers</Typography>
-        <IconButton onClick={() => onClose()}>
+        <IconButton
+          onClick={() => onClose()}
+          sx={{ backgroundColor: 'background.level2' }}
+        >
           <CloseIcon />
         </IconButton>
       </Box>

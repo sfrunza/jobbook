@@ -49,7 +49,11 @@ export default function DeleteDialog({ id }) {
 
   return (
     <div>
-      <IconButton size="small" onClick={handleClickOpen}>
+      <IconButton
+        size="small"
+        onClick={handleClickOpen}
+        sx={{ backgroundColor: 'background.level2' }}
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="h-6 w-6"

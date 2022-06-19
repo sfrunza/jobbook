@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useField } from 'formik';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
-import MobileDatePicker from '@mui/lab/MobileDatePicker';
 import { styled } from '@mui/material/styles';
-import { DesktopDatePicker } from '@mui/lab';
+import { DesktopDatePicker } from '@mui/x-date-pickers';
 
 const StyledTextField = styled((props) => <TextField {...props} />)(
   ({ theme }) => ({

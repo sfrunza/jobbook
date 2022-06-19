@@ -87,9 +87,8 @@ export const loginUser = (user, navigate) => (dispatch) => {
   axios
     .post('/users/sign_in', { user }, { withCredentials: true })
     .then((response) => {
-      console.log(response);
-      if (response.data.status === undefined) {
-        let user = response.data.current_user;
+      if (!response.data.errors) {
+        let user = response.data;
         dispatch(slice.actions.loginSuccess(user));
         navigate('/');
       } else {
@@ -169,7 +168,6 @@ export const uploadProfilePicture = (formData, userId) => async (dispatch) => {
       if (data.error) {
         console.log(data.error);
       } else {
-        // this is where I will dispatch an action creator function to update my store
         dispatch(slice.actions.updateSuccess(data));
       }
     })

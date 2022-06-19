@@ -66,7 +66,7 @@ const ForgotPassword = () => {
             <Stack
               spacing={2}
               direction="column"
-              minWidth={{ xs: 350, md: 400 }}
+              minWidth={{ xs: '100%', sm: 400, md: 400 }}
               margin={'auto'}
             >
               <TextField name="email" type="text" label="Email" />
@@ -80,7 +80,14 @@ const ForgotPassword = () => {
               >
                 Forgot Password
               </LoadingButton>
-              <Link to="/login">Back to Login</Link>
+              <Typography
+                component={Link}
+                to="/login"
+                variant="caption"
+                color="textSecondary"
+              >
+                Back to Login
+              </Typography>
             </Stack>
           </Box>
         </form>
