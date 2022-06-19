@@ -4,6 +4,8 @@ class ApplicationController < ActionController::Base
   skip_before_action :verify_authenticity_token
 
   def fallback_index_html
-    render :file => "/public/index.html"
+    respond_to do |format|
+      format.html { render body: Rails.root.join('public/index.html').read }
+    end
   end
 end
