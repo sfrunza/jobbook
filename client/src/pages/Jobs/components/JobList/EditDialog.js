@@ -54,11 +54,6 @@ export default function EditDialog({ job }) {
     }
   }
 
-  const ggg = {
-    width: { xs: '100px', md: '100' },
-    marginX: { xs: '16px', md: 'auto' },
-  };
-
   return (
     <div>
       <IconButton

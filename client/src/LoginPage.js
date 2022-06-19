@@ -10,7 +10,7 @@ import { loginUser } from 'slices/auth';
 
 const LoginPage = () => {
   let navigate = useNavigate();
-  let { isLoggingIn, error, user } = useSelector((state) => state.auth);
+  let { isLoggingIn, error } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
   function handleSubmit(event) {

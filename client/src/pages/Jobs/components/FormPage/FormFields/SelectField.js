@@ -4,8 +4,6 @@ import { at } from 'lodash';
 import { useField } from 'formik';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
-import FormHelperText from '@mui/material/FormHelperText';
-import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
 
 const StyledTextField = styled((props) => <TextField {...props} />)(
@@ -23,11 +21,6 @@ function SelectField(props) {
   const { value: selectedValue } = field;
   const [touched, error] = at(meta, 'touched', 'error');
   const isError = touched && error && true;
-  function _renderHelperText() {
-    if (isError) {
-      return <FormHelperText>{error}</FormHelperText>;
-    }
-  }
 
   return (
     <Grid container sx={{ flexDirection: { xs: 'column', md: 'row' } }}>

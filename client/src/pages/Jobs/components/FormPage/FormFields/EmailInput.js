@@ -2,7 +2,6 @@ import React from 'react';
 import { at } from 'lodash';
 import { useField } from 'formik';
 import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
 
@@ -12,11 +11,11 @@ const StyledTextField = styled((props) => <TextField {...props} />)(
       color: theme.palette.text.secondary,
       backgroundColor: theme.palette.background.paper,
     },
-  }),
+  })
 );
 
 export default function EmailInput(props) {
-  const { errorText, label = null, ...rest } = props;
+  const { errorText, label, ...rest } = props;
   const [field, meta] = useField(props);
 
   function _renderHelperText() {
@@ -28,20 +27,12 @@ export default function EmailInput(props) {
 
   return (
     <>
-      {/* <Typography
-        variant={'subtitle1'}
-        fontWeight={600}
-        gutterBottom
-        htmlFor={props.field}
-      >
-        {props.label}
-      </Typography> */}
       <StyledTextField
         {...field}
         {...rest}
         size="small"
         type="text"
-        placeholder={props.label}
+        placeholder={label}
         error={meta.touched && meta.error && true}
         helperText={_renderHelperText()}
         InputProps={{
