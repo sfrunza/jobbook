@@ -92,7 +92,12 @@ const Employees = () => {
             variant="scrollable"
           >
             {tabs.map((tab) => (
-              <Tab key={tab.value} label={tab.label} value={tab.value} />
+              <Tab
+                key={tab.value}
+                label={tab.label}
+                value={tab.value}
+                disableRipple
+              />
             ))}
           </Tabs>
           <Divider />

@@ -16,7 +16,6 @@ export default function CustomTabs({ value, handleChange }) {
         <Tabs value={value} onChange={handleChange}>
           <Tab label="General" {...a11yProps(0)} disableRipple />
           <Tab label="Jobs" {...a11yProps(1)} disableRipple />
-          <Tab label="Security" {...a11yProps(2)} disableRipple />
         </Tabs>
       </Box>
     </Box>

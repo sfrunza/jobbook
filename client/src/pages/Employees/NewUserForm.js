@@ -17,12 +17,14 @@ const formInitialValues = {
 };
 
 const validationSchema = Yup.object().shape({
-  firstName: Yup.string().nullable().required('first'),
-  lastName: Yup.string().nullable().required('last'),
-  email: Yup.string().nullable().required('email'),
-  password: Yup.string().nullable().required('pass'),
-  passwordConfirmation: Yup.string().nullable().required('pass conf'),
-  role: Yup.string().nullable().required('role req'),
+  firstName: Yup.string().nullable().required('required'),
+  lastName: Yup.string().nullable().required('required'),
+  email: Yup.string().nullable().required('required').email(),
+  password: Yup.string().nullable().required('required'),
+  passwordConfirmation: Yup.string()
+    .required('required')
+    .oneOf([Yup.ref('password')], 'passwords do not match.'),
+  role: Yup.string().nullable().required('required'),
 });
 
 export default function NewUserForm({ handleClose }) {
@@ -36,7 +38,6 @@ export default function NewUserForm({ handleClose }) {
       password: values.password,
       password_confirmation: values.passwordConfirmation,
       role: values.role,
-      admin: false,
       username: values.username,
     };
     try {
@@ -132,6 +133,7 @@ export default function NewUserForm({ handleClose }) {
                   <TextField
                     name="password"
                     label="Password"
+                    type="password"
                     value={values.password}
                     onChange={handleChange}
                     error={Boolean(touched.password && errors.password)}
@@ -142,6 +144,7 @@ export default function NewUserForm({ handleClose }) {
                 <Grid item xs={12} md={6}>
                   <TextField
                     name="passwordConfirmation"
+                    type="password"
                     label="Confirm Password"
                     value={values.passwordConfirmation}
                     onChange={handleChange}
