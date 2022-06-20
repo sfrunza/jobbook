@@ -86,6 +86,7 @@ export default function DeleteDialog({ user, currentTab }) {
               right: 8,
               top: 8,
               color: (theme) => theme.palette.grey[500],
+              backgroundColor: 'background.level2',
             }}
           >
             <svg

@@ -10,7 +10,7 @@ import { useSWRConfig } from 'swr';
 import toast from 'react-hot-toast';
 import { LoadingButton } from '@mui/lab';
 
-export default function DeleteDialog({ id }) {
+export default function DeleteDialog({ id, monthYear }) {
   const [open, setOpen] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const { mutate } = useSWRConfig();
@@ -36,6 +36,7 @@ export default function DeleteDialog({ id }) {
       if (data.message) {
         toast.success('Job Deleted');
         mutate('/api/v1/jobs');
+        mutate(`/api/v1/selected-month?&my=${monthYear}`);
         handleClose();
       } else {
         toast.error(data.error);

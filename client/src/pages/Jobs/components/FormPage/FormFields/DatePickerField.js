@@ -4,6 +4,7 @@ import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import { styled } from '@mui/material/styles';
 import { DesktopDatePicker } from '@mui/x-date-pickers';
+import moment from 'moment';
 
 const StyledTextField = styled((props) => <TextField {...props} />)(
   ({ theme }) => ({
@@ -20,29 +21,38 @@ export default function DatePickerField(props) {
   const { setValue } = helper;
   const isError = touched && Boolean(error);
   const { value } = field;
-  const [selectedDate, setSelectedDate] = useState(null);
+  // const [selectedDate, setSelectedDate] = useState(new Date());
   const { label, ...rest } = props;
 
-  useEffect(() => {
-    if (value) {
-      const date = new Date(value);
-      setSelectedDate(date);
-    }
-  }, [value]);
+  // useEffect(() => {
+  //   if (value) {
+  //     const date = new Date(value);
+  //     setSelectedDate(date);
+  //   }
+  // }, [value]);
 
   function _onChange(date) {
-    if (date) {
-      setSelectedDate(date);
-      try {
-        const ISODateString = date.toISOString();
-        setValue(ISODateString);
-      } catch (error) {
-        setValue(date);
-      }
-    } else {
-      setValue(date);
-    }
+    const newDate = new Date(date);
+    setValue(moment(newDate).format('YYYY-MM-DD'));
+    // if (date) {
+    //   setSelectedDate(date);
+    //   try {
+    //     const ISODateString = date.toISOString();
+    //     setValue(ISODateString);
+    //   } catch (error) {
+    //     setValue(date);
+    //   }
+    // } else {
+    //   setValue(date);
+    // }
   }
+
+  // console.log(value);
+  // const date = new Date(value);
+  // const dateAsString = date.toString();
+  // const timezone = dateAsString.match(/\(([^\)]+)\)$/)[1];
+
+  // console.log(dateAsString);
 
   return (
     <Grid container sx={{ flexDirection: { xs: 'column', md: 'row' } }}>
@@ -50,7 +60,8 @@ export default function DatePickerField(props) {
         <DesktopDatePicker
           {...field}
           {...rest}
-          value={selectedDate}
+          value={value || ''}
+          format="yyyy-mm-dd"
           onChange={_onChange}
           InputAdornmentProps={{
             position: 'end',

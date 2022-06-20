@@ -24,6 +24,13 @@ class Api::V1::JobsController < ApplicationController
     render json: @job
   end
 
+  def selected_month
+    # @jobs = current_user.jobs
+    date_range = Date.parse(params[:my]).beginning_of_month..Date.parse(params[:my]).end_of_month
+    @jobs = current_user.jobs.where(:date => date_range).order("date DESC")
+    render json: @jobs
+  end
+
   # GET /jobs/new
   def new
     @job = Job.new

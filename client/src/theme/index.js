@@ -25,13 +25,13 @@ const getTheme = (mode, themeToggler) =>
         //     containedSecondary: mode === 'light' ? { color: 'white' } : {},
         //   },
         // },
-        MuiIconButton: {
-          styleOverrides: {
-            root: {
-              // backgroundColor: light.background.level2,
-            },
-          },
-        },
+        // MuiIconButton: {
+        //   styleOverrides: {
+        //     root: {
+        //       backgroundColor: light.background.level2,
+        //     },
+        //   },
+        // },
         // MuiTypography: {
         //   styleOverrides: {
         //     root: {
