@@ -5,7 +5,7 @@ import App from './App';
 import { Provider } from 'react-redux';
 import { store } from './store';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import AdapterDateFns from '@mui/lab/AdapterMoment';
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { Toaster } from 'react-hot-toast';
 import { ThemeProvider } from '@mui/material/styles';
 import getTheme from './theme';
@@ -17,7 +17,7 @@ root.render(
     <Provider store={store}>
       <ThemeProvider theme={getTheme('light')}>
         <BrowserRouter>
-          <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <LocalizationProvider dateAdapter={AdapterMoment}>
             <Routes>
               <Route path="/*" element={<App />} />
             </Routes>

@@ -13,14 +13,10 @@ export default function CustomTabs({ value, handleChange }) {
   return (
     <Box sx={{ width: '100%' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          aria-label="basic tabs example"
-        >
-          <Tab label="General" {...a11yProps(0)} />
-          <Tab label="Jobs" {...a11yProps(1)} />
-          <Tab label="Security" {...a11yProps(2)} />
+        <Tabs value={value} onChange={handleChange}>
+          <Tab label="General" {...a11yProps(0)} disableRipple />
+          <Tab label="Jobs" {...a11yProps(1)} disableRipple />
+          <Tab label="Security" {...a11yProps(2)} disableRipple />
         </Tabs>
       </Box>
     </Box>

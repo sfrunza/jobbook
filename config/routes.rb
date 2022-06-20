@@ -13,6 +13,7 @@ Rails.application.routes.draw do
       resources :jobs
       get "/filter-users", :to => "users#filter_users", as: "filter-users"
       post "/reset", :to => "users#reset", as: "reset"
+      get "/selected-month", :to => "jobs#selected_month", as: "selected_month"
     end
   end
 

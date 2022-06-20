@@ -13,9 +13,11 @@ import {
 } from '@mui/material';
 import DeleteDialog from './DeleteDialog';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'store';
 
 const UserListTable = (props) => {
   const { users, currentTab } = props;
+  const { user } = useSelector((state) => state.auth);
 
   return (
     <TableContainer component={Paper}>
@@ -31,34 +33,34 @@ const UserListTable = (props) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {users?.map((user) => {
+          {users?.map((u) => {
             return (
-              <TableRow hover key={user.id}>
+              <TableRow hover key={u.id}>
                 <TableCell>
                   <Box display="flex" alignItems="center">
                     <Box mr={2}>
                       <Avatar />
                     </Box>
                     <Box flexDirection="column">
-                      <Link to={`/employees/${user.id}`}>
+                      <Link to={`/employees/${u.id}`}>
                         <Typography fontWeight={600}>
-                          {user.first_name + ' ' + user.last_name} (
-                          {user.username})
+                          {u.first_name + ' ' + u.last_name} ({u.username})
                         </Typography>
                       </Link>
                       <Typography color={'text.secondary'} variant={'caption'}>
-                        {user.email}
+                        {u.email}
                       </Typography>
                     </Box>
                   </Box>
                 </TableCell>
-                <TableCell>{user.phone}</TableCell>
+                <TableCell>{u.phone}</TableCell>
                 <TableCell>
-                  {user.role &&
-                    user.role.charAt(0).toUpperCase() + user.role.slice(1)}
+                  {u.role && u.role.charAt(0).toUpperCase() + u.role.slice(1)}
                 </TableCell>
                 <TableCell align="right">
-                  <DeleteDialog user={user} currentTab={currentTab} />
+                  {u.id !== user.id && (
+                    <DeleteDialog user={u} currentTab={currentTab} />
+                  )}
                 </TableCell>
               </TableRow>
             );

@@ -6,6 +6,29 @@ import { useSWRConfig } from 'swr';
 import { LoadingButton } from '@mui/lab';
 import * as Yup from 'yup';
 
+const formattedKey = (word) => {
+  // lastName -> last_name
+  return word
+    .split(/(?=[A-Z])/)
+    .join('_')
+    .toLowerCase();
+};
+
+const isEqual = (values, user) => {
+  let arr = Object.keys(values);
+  let eq = false;
+
+  arr.map((item) => {
+    // console.log(user[formattedKey(item)]);
+    if (typeof values[item] === typeof user[formattedKey(item)]) {
+      if (values[item] !== user[formattedKey(item)]) {
+        eq = true;
+      }
+    }
+  });
+  return eq;
+};
+
 const validationSchema = Yup.object().shape({
   firstName: Yup.string().nullable().required('first'),
   lastName: Yup.string().nullable().required('last'),
@@ -15,14 +38,15 @@ const validationSchema = Yup.object().shape({
 
 export default function General({ user }) {
   const { mutate } = useSWRConfig();
+  const { first_name, last_name, email, role, username, admin } = user;
 
   let formInitialValues = {
-    firstName: user.first_name,
-    lastName: user.last_name,
-    email: user.email,
-    role: user.role,
-    username: user.username,
-    admin: user.admin,
+    firstName: first_name,
+    lastName: last_name,
+    email: email,
+    role: role,
+    username: username,
+    admin: admin,
   };
 
   async function _submitForm(values, actions) {
@@ -152,8 +176,9 @@ export default function General({ user }) {
                   color="primary"
                   size="large"
                   disableElevation
+                  disabled={!isEqual(values, user)}
                 >
-                  Edit user
+                  Update user
                 </LoadingButton>
               </Box>
             </Form>

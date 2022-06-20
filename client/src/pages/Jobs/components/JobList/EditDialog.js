@@ -8,7 +8,7 @@ import toast from 'react-hot-toast';
 import FormPage from '../FormPage/index';
 import { useSelector } from 'store';
 
-export default function EditDialog({ job }) {
+export default function EditDialog({ job, monthYear }) {
   const [open, setOpen] = React.useState(false);
   const { mutate } = useSWRConfig();
   const { user } = useSelector((state) => state.auth);
@@ -43,6 +43,7 @@ export default function EditDialog({ job }) {
         toast.success('Job Updated');
         actions.resetForm();
         mutate('/api/v1/jobs');
+        mutate(`/api/v1/selected-month?&my=${monthYear}`);
         handleClose();
       } else {
         toast.error(newJob.error);

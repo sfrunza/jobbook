@@ -19,7 +19,7 @@ const range = (start, stop, step) =>
 
 const timeArray = [...range(0.25, 20, 0.25)];
 
-export default function FormPage({ edit = false, job, handleEdit }) {
+export default function FormPage({ edit = false, job, handleEdit, monthYear }) {
   const { mutate } = useSWRConfig();
   const currentValidationSchema = validationSchema[0];
   const { user } = useSelector((state) => state.auth);
@@ -46,6 +46,7 @@ export default function FormPage({ edit = false, job, handleEdit }) {
         toast.success('Job Added');
         actions.resetForm();
         mutate('/api/v1/jobs');
+        mutate(`/api/v1/selected-month?&my=${monthYear}`);
       } else {
         toast.error(newJob.error);
       }

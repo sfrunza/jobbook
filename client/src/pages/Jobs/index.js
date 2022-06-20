@@ -5,8 +5,32 @@ import JobList from './components/JobList/index';
 import Fixed from 'layouts/Fixed';
 import Container from 'components/Container';
 import { Box, Button, Typography, Divider } from '@mui/material';
+import moment from 'moment';
+import useSWR, { mutate } from 'swr';
+
+const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
 const Jobs = () => {
+  const [monthYear, setMonthYear] = React.useState(
+    moment().format('MMMM,YYYY')
+  );
+
+  const jobRef = React.useRef();
+
+  const { data: jobs, error } = useSWR(
+    `/api/v1/selected-month?&my=${monthYear}`,
+    fetcher
+  );
+  const { data, error: jobsError } = useSWR('/api/v1/jobs', fetcher);
+
+  const handleSelect = (e) => {
+    e.preventDefault();
+    setMonthYear(e.target.value);
+    mutate(`/api/v1/selected-month?&my=${e.target.value}`);
+    // jobRef.current.focus();
+    jobRef.current.scrollIntoView();
+  };
+
   return (
     <Fixed>
       <Container maxWidth="unset">
@@ -17,7 +41,7 @@ const Jobs = () => {
                 Jobs
               </Typography>
             </Grid>
-            <Grid item>
+            {/* <Grid item>
               <Button
                 disableElevation
                 startIcon={
@@ -41,18 +65,40 @@ const Jobs = () => {
               >
                 Add
               </Button>
-            </Grid>
+            </Grid> */}
           </Grid>
         </Box>
 
         <Divider sx={{ mb: 4 }} />
 
-        <Grid container spacing={2}>
+        <Grid container spacing={2} sx={{ justifyContent: 'space-between' }}>
           <Grid item xs={12} md={4}>
-            <FormPage />
+            <FormPage monthYear={monthYear} />
           </Grid>
-          <Grid item xs={12} md={8}>
-            <JobList />
+          <Grid
+            item
+            xs={12}
+            sx={{ display: { xs: 'inline', md: 'none' }, mt: 4 }}
+          >
+            <Divider />
+          </Grid>
+          <Grid
+            item
+            xs={12}
+            md={8}
+            sx={{ mt: { xs: 4, md: 'unset' } }}
+            ref={jobRef}
+          >
+            <div ref={jobRef}>
+              <JobList
+                monthYear={monthYear}
+                handleSelect={handleSelect}
+                jobs={jobs}
+                data={data}
+                error={error}
+                jobsError={jobsError}
+              />
+            </div>
           </Grid>
         </Grid>
       </Container>
