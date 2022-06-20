@@ -1,10 +1,11 @@
 import React from 'react';
-import { Box, Grid, TextField, Card } from '@mui/material';
+import { Box, Grid, TextField, Card, Switch, Typography } from '@mui/material';
 import { Formik, Form } from 'formik';
 import toast from 'react-hot-toast';
 import { useSWRConfig } from 'swr';
 import { LoadingButton } from '@mui/lab';
 import * as Yup from 'yup';
+import { useSelector } from 'store';
 
 const formattedKey = (word) => {
   // lastName -> last_name
@@ -39,6 +40,7 @@ const validationSchema = Yup.object().shape({
 export default function General({ user }) {
   const { mutate } = useSWRConfig();
   const { first_name, last_name, email, role, username, admin } = user;
+  const { user: currentUser } = useSelector((state) => state.auth);
 
   let formInitialValues = {
     firstName: first_name,
@@ -145,7 +147,7 @@ export default function General({ user }) {
                     fullWidth
                   />
                 </Grid>
-                <Grid item xs={12} md={6}>
+                <Grid item xs={6} md={6}>
                   <TextField
                     select
                     fullWidth
@@ -167,6 +169,18 @@ export default function General({ user }) {
                     ))}
                   </TextField>
                 </Grid>
+                {user.id !== currentUser.id && (
+                  <Grid item xs={12}>
+                    <Box display={'flex'} alignItems="center">
+                      <Typography variant="body2">Admin</Typography>
+                      <Switch
+                        name="admin"
+                        checked={values.admin}
+                        onChange={handleChange}
+                      />
+                    </Box>
+                  </Grid>
+                )}
               </Grid>
               <Box display={'flex'} mt={2} justifyContent="flex-end">
                 <LoadingButton

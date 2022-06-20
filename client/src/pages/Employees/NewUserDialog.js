@@ -61,6 +61,7 @@ export default function NewUserDialog() {
               right: 8,
               top: 8,
               color: (theme) => theme.palette.grey[500],
+              backgroundColor: 'background.level2',
             }}
           >
             <svg
