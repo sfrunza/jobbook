@@ -1,14 +1,13 @@
 import Container from 'components/Container';
 import Fixed from 'layouts/Fixed';
-import React, { useState } from 'react';
+import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import useSWR, { mutate } from 'swr';
+import useSWR from 'swr';
 import { Box, Grid, Typography, Divider, Button } from '@mui/material';
 import Spinner from 'components/Spinner';
-import JobList from './JobList';
+import Jobs from './Jobs';
 import CustomTabs from './CustomTabs';
 import General from './General';
-import moment from 'moment';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -29,7 +28,7 @@ function TabPanel(props) {
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
-const Employee = (props) => {
+const Employee = () => {
   const params = useParams();
   const navigate = useNavigate();
   const id = Number(params.id);
@@ -38,39 +37,12 @@ const Employee = (props) => {
     `/api/v1/users/${id}`,
     fetcher
   );
-  // const { data: jobs, error: jobsError } = useSWR(
-  //   `/api/v1/users/${id}/user-jobs?&start=&end=`,
-  //   fetcher
-  // );
 
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
-  // const handleStartChange = (newValue) => {
-  //   let formattedDate = moment(newValue).format('YYYY-MM-DD');
-  //   setStart(formattedDate);
-  // };
-  // const handleEndChange = (newValue) => {
-  //   let formattedDate = moment(newValue).format('YYYY-MM-DD');
-  //   setEnd(formattedDate);
-  // };
-
-  // const handleFilter = () => {
-  //   fetch(`/api/v1/users/${id}/user-jobs?&start=${start}&end=${end}`)
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       console.log(data);
-  //       mutate(`/api/v1/users/${id}/user-jobs?&start=${start}&end=${end}`);
-  //     })
-  //     .catch((err) => console.log(err));
-  //   console.log(start, end);
-  //   mutate(`/api/v1/users/${id}/user-jobs?&start=${start}&end=${end}`);
-  // };
-
-  // console.log(jobs);
 
   return (
     <Fixed>
@@ -131,7 +103,7 @@ const Employee = (props) => {
         )}
         {value === 1 && (
           <TabPanel value={value} index={1}>
-            <JobList userId={id} />
+            <Jobs userId={id} />
           </TabPanel>
         )}
       </Container>

@@ -10,7 +10,7 @@ import moment from 'moment';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Spinner from 'components/Spinner';
-import { TableFooter, TextField, MenuItem } from '@mui/material';
+import { TableFooter, TextField, MenuItem, Typography } from '@mui/material';
 import DeleteDialog from './DeleteDialog';
 import EditDialog from './EditDialog';
 
@@ -51,7 +51,9 @@ export default function JobList({
   const unique = months?.filter(onlyUnique);
 
   const totalHours = jobs?.reduce((accumulator, object) => {
-    return accumulator + object.work_time;
+    let extraTime = object.extra_hour ? 1 : 0;
+    let minTime = object.min_time ? 5 : object.work_time;
+    return accumulator + minTime + extraTime;
   }, 0);
 
   const totalTips = jobs?.reduce((accumulator, object) => {
@@ -94,7 +96,7 @@ export default function JobList({
             <TableRow>
               <StyledTableCell>Date</StyledTableCell>
               <StyledTableCell align="right">Job ID</StyledTableCell>
-              <StyledTableCell align="right">Hours</StyledTableCell>
+              <StyledTableCell align="right">workT/extraT/minT</StyledTableCell>
               <StyledTableCell align="right">C/C Tips</StyledTableCell>
               <StyledTableCell align="right">Teammates</StyledTableCell>
               <StyledTableCell align="right">Comments</StyledTableCell>
@@ -111,7 +113,28 @@ export default function JobList({
                   {moment(job.date).format('ddd, MMM DD')}
                 </StyledTableCell>
                 <StyledTableCell align="right">{job.job_id}</StyledTableCell>
-                <StyledTableCell align="right">{job.work_time}</StyledTableCell>
+                <StyledTableCell align="right">
+                  <Typography
+                    component={'span'}
+                    color={job.work_time >= 5 ? 'primary' : 'textPrimary'}
+                  >
+                    {job.work_time}
+                  </Typography>
+                  /
+                  <Typography
+                    component={'span'}
+                    color={job.work_time >= 5 ? 'primary' : 'textPrimary'}
+                  >
+                    {job.extra_hour ? '1' : '*'}
+                  </Typography>
+                  /
+                  <Typography
+                    component={'span'}
+                    color={job.work_time < 5 ? 'primary' : 'textPrimary'}
+                  >
+                    {job.min_time ? '5' : '*'}
+                  </Typography>
+                </StyledTableCell>
                 <StyledTableCell align="right">{job.tips}</StyledTableCell>
                 <StyledTableCell align="right">
                   <Box
