@@ -45,19 +45,31 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def user_jobs
+    @user = User.find(params[:user_id])
+
     if params[:start] != "" || params[:end] != ""
       start_date = params[:start]
       end_date = params[:end]
       date_range = Date.parse(start_date)..Date.parse(end_date)
 
-      @user = User.find(params[:user_id])
+      @jobs = @user.jobs.where(:date => date_range).order("date DESC")
+      render json: @jobs
+    elsif params[:my] != ""
+      date_range = Date.parse(params[:my]).beginning_of_month..Date.parse(params[:my]).end_of_month
       @jobs = @user.jobs.where(:date => date_range).order("date DESC")
       render json: @jobs
     else
-      @user = User.find(params[:user_id])
-      @jobs = @user.jobs.order("date DESC").last(15)
+      @jobs = @user.jobs
       render json: @jobs
     end
+  end
+
+  def selected_month_users
+    @user = User.find(params[:user_id])
+
+    date_range = Date.parse(params[:my]).beginning_of_month..Date.parse(params[:my]).end_of_month
+    @jobs = @user.jobs.where(:date => date_range).order("date DESC")
+    render json: @jobs
   end
 
   def reset

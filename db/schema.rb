@@ -22,6 +22,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_05_185004) do
     t.text "comments"
     t.string "teammates", default: [], array: true
     t.bigint "user_id"
+    t.boolean "min_time", default: false
+    t.boolean "extra_hour", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_jobs_on_user_id"

@@ -30,6 +30,8 @@ export default function EditDialog({ job, monthYear }) {
       comments: values.comments,
       user_id: user.id,
       teammates: values.teammates,
+      extra_hour: values.extraHour,
+      min_time: values.minTime,
     };
     try {
       const resp = await fetch(`/api/v1/jobs/${job.id}`, {
@@ -119,20 +121,6 @@ export default function EditDialog({ job, monthYear }) {
         <DialogContent sx={{ pt: '20px !important' }}>
           <FormPage edit job={job} handleEdit={handleEdit} />
         </DialogContent>
-        {/* <DialogActions>
-          <Button onClick={handleClose} variant="outlined">
-            No
-          </Button>
-          <Button
-            variant="contained"
-            disableElevation
-            onClick={() => {
-              handleDelete(id);
-            }}
-          >
-            Yes
-          </Button>
-        </DialogActions> */}
       </Dialog>
     </div>
   );

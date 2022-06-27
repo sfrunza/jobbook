@@ -89,6 +89,6 @@ class Api::V1::JobsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def job_params
-    params.fetch(:job, {}).permit(:date, :job_id, :work_time, :tips, :comments, :user_id, :teammates => [])
+    params.fetch(:job, {}).permit(:date, :job_id, :work_time, :tips, :comments, :user_id, :extra_hour, :min_time, :teammates => [])
   end
 end

@@ -13,6 +13,7 @@ import {
 } from './FormFields';
 import { useSelector } from 'store';
 import { LoadingButton } from '@mui/lab';
+import RadioField from './FormFields/RadioField';
 
 const range = (start, stop, step) =>
   Array.from({ length: (stop - start) / step + 1 }, (_, i) => start + i * step);
@@ -33,6 +34,8 @@ export default function FormPage({ edit = false, job, handleEdit, monthYear }) {
       comments: values.comments,
       user_id: user.id,
       teammates: values.teammates,
+      extra_hour: values.extraHour,
+      min_time: values.minTime,
     };
     try {
       const resp = await fetch('/api/v1/jobs', {
@@ -77,6 +80,8 @@ export default function FormPage({ edit = false, job, handleEdit, monthYear }) {
                 tips: job.tips,
                 comments: job.comments,
                 teammates: job.teammates,
+                extraHour: job.extra_hour,
+                minTime: job.min_time,
               }
             : formInitialValues
         }
@@ -101,6 +106,12 @@ export default function FormPage({ edit = false, job, handleEdit, monthYear }) {
                     fullWidth
                     data={timeArray}
                   />
+                </Grid>
+                <Grid item xs={12}>
+                  <RadioField name="minTime" label="Min 5h?" />
+                </Grid>
+                <Grid item xs={12}>
+                  <RadioField name="extraHour" label="Extra 1h?" />
                 </Grid>
                 <Grid item xs={12}>
                   <InputField name="tips" label="C/C Tips" fullWidth />

@@ -29,5 +29,13 @@ export default {
       name: 'teammates',
       label: 'Teammates',
     },
+    extraHour: {
+      name: 'extraHour',
+      label: 'Exta 1h',
+    },
+    minTime: {
+      name: 'minTime',
+      label: 'Min 5h',
+    },
   },
 };
