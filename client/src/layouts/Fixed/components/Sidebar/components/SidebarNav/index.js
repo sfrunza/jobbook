@@ -56,9 +56,26 @@ const SidebarNav = ({ pages, onClose }) => {
         <Typography variant="h6">Raimond's Movers</Typography>
         <IconButton
           onClick={() => onClose()}
-          sx={{ backgroundColor: 'background.level2' }}
+          sx={{
+            color: (theme) => theme.palette.grey[600],
+            backgroundColor: 'background.level2',
+          }}
         >
-          <CloseIcon />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={3}
+            width="20"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
         </IconButton>
       </Box>
       <Box
