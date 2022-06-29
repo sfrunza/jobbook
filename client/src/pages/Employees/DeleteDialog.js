@@ -89,7 +89,7 @@ export default function DeleteDialog({ user, currentTab }) {
               position: 'absolute',
               right: 8,
               top: 8,
-              color: (theme) => theme.palette.grey[500],
+              color: (theme) => theme.palette.grey[600],
               backgroundColor: 'background.level2',
             }}
           >
@@ -99,7 +99,7 @@ export default function DeleteDialog({ user, currentTab }) {
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
-              strokeWidth={2}
+              strokeWidth={3}
               width="20"
             >
               <path
