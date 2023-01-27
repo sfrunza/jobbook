@@ -1,20 +1,48 @@
 class Api::V1::JobsController < ApplicationController
-  before_action :set_jobs, only: %i[ show edit update destroy ]
+  before_action :set_user, only: %i[ index available_months show edit update destroy ]
+  before_action :set_job, only: %i[ show edit update destroy ]
   before_action :authenticate_user!
 
-  # GET /jobs or /jobs.json
   def index
-    if current_user && current_user.admin
-      #   @jobs = Job.all.order("id DESC")
-      #   render json: @jobs
-      @jobs = current_user.jobs.order("date DESC")
-      render json: @jobs
-    elsif current_user
-      @jobs = current_user.jobs.order("date DESC")
-      render json: @jobs
+    month_date_to_search = Date.new(params[:year].to_i, params[:month].to_i, 1)
+    start_from = month_date_to_search.beginning_of_month
+    finish = Date.new(params[:year].to_i, params[:month].to_i, 1).next_month.beginning_of_month
+
+    @jobs = @user.jobs.where(:date => start_from..finish).order("date DESC")
+
+    @total_jobs = @user.jobs.length
+    @total_tips = @jobs.sum(:tips)
+    @total_hours = sum(@jobs)
+    render json: { total_jobs: @total_jobs, total_hours: @total_hours, total_tips: @total_tips, jobs: @jobs }
+  end
+
+  def available_months
+    if @user.jobs.length > 0
+      first = Date.parse(@user.jobs.order("date ASC").first.date)
+      last = Date.parse(@user.jobs.order("date ASC").last.date)
+      @months = @user.jobs.map { |job| Date.parse(job.date).strftime("%b %Y") }.uniq
+      @sorted = @months.sort_by { |d| m, y = d.split(" "); [Date.parse(d).strftime("%m"), Date.parse(d).strftime("%Y")] }
+
+      render json: { months: @sorted }
     else
-      render json: { current_user: nil, message: "Please sign in.", status: 401, logged_in: false }
+      render json: { months: [] }
     end
+  end
+
+  def sum(array)
+    sum = 0
+    array.each do |job|
+      extra_time = job.extra_hour ? 1 : 0
+      min_time = job.min_time ? 5 : job.work_time
+      sum += extra_time + min_time
+    end
+    return sum
+  end
+
+  def doit(first, last)
+    first = first << 1
+    (12 * last.year + last.month - 12 * first.year - first.month + 1).
+      times.map { |i| (first = first >> 1).strftime("%b %Y") }
   end
 
   # GET /jobs/1 or /jobs/1.json
@@ -23,6 +51,13 @@ class Api::V1::JobsController < ApplicationController
     @job = @jobs.find(params[:id])
     render json: @job
   end
+
+  # def available_months
+  #   first = Date.parse(current_user.jobs.order("date ASC").first.date)
+  #   last = Date.parse(current_user.jobs.order("date ASC").last.date)
+  #   @months = current_user.jobs.map { |job| Date.parse(job.date).strftime("%b %Y") }.uniq
+  #   render json: { months: @months }
+  # end
 
   def selected_month
     # @jobs = current_user.jobs
@@ -60,14 +95,23 @@ class Api::V1::JobsController < ApplicationController
 
   # PATCH/PUT /jobs/1 or /jobs/1.json
   def update
-    respond_to do |format|
-      if @job.update(job_params)
-        # format.html { redirect_to job_url(@job), notice: "job was successfully updated." }
-        format.json { render json: @job, status: :ok }
-      else
-        # format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @job.errors, status: :unprocessable_entity }
-      end
+    # respond_to do |format|
+    #   if @job.update(job_params)
+    #     # format.html { redirect_to job_url(@job), notice: "job was successfully updated." }
+    #     format.json { render json: @job, status: :ok }
+    #   else
+    #     # format.html { render :edit, status: :unprocessable_entity }
+    #     format.json { render json: @job.errors, status: :unprocessable_entity }
+    #   end
+    # end
+    if @job.update(job_params)
+      render json: {
+               status: :accepted,
+               message: "Job updated!",
+               job: @job,
+             }
+    else
+      render json: @job.errors, status: :unprocessable_entity
     end
   end
 
@@ -80,8 +124,22 @@ class Api::V1::JobsController < ApplicationController
   private
 
   # Use callbacks to share common setup or constraints between actions.
-  def set_jobs
-    @job = Job.find(params[:id])
+  # def set_job
+  #   @job = Job.find(params[:id])
+  # rescue => e
+  #   logger.info e
+  #   render json: { message: "job id not found" }, status: :not_found
+  # end
+
+  def set_user
+    @user = User.find(params[:user_id])
+  rescue => e
+    logger.info e
+    render json: { message: "user id not found" }, status: :not_found
+  end
+
+  def set_job
+    @job = @user.jobs.find(params[:id])
   rescue => e
     logger.info e
     render json: { message: "job id not found" }, status: :not_found

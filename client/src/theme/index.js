@@ -9,7 +9,7 @@ const getTheme = (mode, themeToggler) =>
     createTheme({
       palette: mode === 'light' ? light : null,
       shape: {
-        borderRadius: 10,
+        borderRadius: 8,
       },
       shadows: shadows(mode),
       zIndex: {

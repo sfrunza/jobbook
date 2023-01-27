@@ -13,7 +13,7 @@ export const light = {
   //   primary: 'rgb(5, 15, 25)',
   //   secondary: '#5B7188',
   // },
-  // divider: '#eaeaea',
+  // divider: 'pink',
   background: {
     paper: '#ffffff',
     default: '#ffffff',

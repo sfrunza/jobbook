@@ -7,11 +7,14 @@ class SessionsController < Devise::SessionsController
 
     if @user.valid_password?(user_params[:password])
       sign_in :user, @user
-      render :json => @user
+      render json: {
+        status: :accept,
+        user: @user,
+      }
     else
       render json: {
                status: 401,
-               errors: ["Invalid password"],
+               error: "Invalid password",
              }
     end
   end
@@ -29,7 +32,7 @@ class SessionsController < Devise::SessionsController
     # render json: {error: ['No such user!', ' Verify credentials and try again']}, status: :unprocessable_entity
     render json: {
              status: :unprocessable_entity,
-             errors: ["No such user!", " Verify credentials and try again"],
+             error: "Verify credentials and try again",
            }
   end
 

@@ -1,5 +1,4 @@
-import React, { useState, useRef } from 'react';
-import Grid from '@mui/material/Grid';
+import { useState, useRef } from 'react';
 import Fixed from 'layouts/Fixed';
 import Container from 'components/Container';
 import UserListTable from './UserListTable';
@@ -45,7 +44,7 @@ const Employees = () => {
   const queryRef = useRef(null);
 
   const { data, error } = useSWR(
-    `/api/v1/filter-users?&role=${currentTab}&search=${search}`,
+    `/api/v1/filter_users?&role=${currentTab}&search=${search}`,
     fetcher
   );
 
@@ -66,20 +65,18 @@ const Employees = () => {
 
   return (
     <Fixed>
-      <Container maxWidth="unset">
-        <Box sx={{ mb: 2 }}>
-          <Grid container justifyContent="space-between">
-            <Grid item>
-              <Typography variant="h4" fontWeight={600}>
-                Employees
-              </Typography>
-            </Grid>
-            <Grid item>
-              <NewUserDialog />
-            </Grid>
-          </Grid>
+      <Container maxWidth="xl" sx={{ paddingY: 4 }}>
+        <Box
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center"
+          mb={1}
+        >
+          <Typography variant="h4" fontWeight={600}>
+            Employees
+          </Typography>
+          <NewUserDialog />
         </Box>
-
         <Divider sx={{ mb: 4 }} />
         <Card>
           <Tabs

@@ -51,7 +51,8 @@ export default function NewUserDialog() {
         maxWidth="sm"
         fullWidth
       >
-        <DialogTitle sx={{ mb: 2, p: 2 }}>
+        <DialogTitle sx={{ p: 2 }}>
+          New Employee
           <IconButton
             aria-label="close"
             size="small"

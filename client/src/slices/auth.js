@@ -83,21 +83,22 @@ const slice = createSlice({
 export const { reducer } = slice;
 
 export const loginUser = (user, navigate) => (dispatch) => {
-  dispatch(slice.actions.loginRequest());
-  axios
-    .post('/users/sign_in', { user }, { withCredentials: true })
-    .then((response) => {
-      if (!response.data.errors) {
-        let user = response.data;
-        dispatch(slice.actions.loginSuccess(user));
-        navigate('/');
-      } else {
-        dispatch(slice.actions.loginFailure(response.data.errors));
-      }
-    })
-    .catch((error) => {
-      dispatch(slice.actions.loginFailure(error.message));
-    });
+  dispatch(slice.actions.loginSuccess(user));
+  // dispatch(slice.actions.loginRequest());
+  // axios
+  //   .post('/users/sign_in', { user }, { withCredentials: true })
+  //   .then((response) => {
+  //     if (!response.data.errors) {
+  //       let user = response.data;
+  //       dispatch(slice.actions.loginSuccess(user));
+  //       navigate('/');
+  //     } else {
+  //       dispatch(slice.actions.loginFailure(response.data.errors));
+  //     }
+  //   })
+  //   .catch((error) => {
+  //     dispatch(slice.actions.loginFailure(error.message));
+  //   });
 };
 
 export const logoutUser = (navigate) => async (dispatch) => {

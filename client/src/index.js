@@ -13,24 +13,24 @@ import { LocalizationProvider } from '@mui/x-date-pickers';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <ThemeProvider theme={getTheme('light')}>
-        <BrowserRouter>
-          <LocalizationProvider dateAdapter={AdapterMoment}>
-            <Routes>
-              <Route path="/*" element={<App />} />
-            </Routes>
-            <Toaster
-              toastOptions={{
-                style: {
-                  fontFamily: ['Roboto', 'Helvetica', 'Arial', 'sans-serif'],
-                },
-              }}
-            />
-          </LocalizationProvider>
-        </BrowserRouter>
-      </ThemeProvider>
-    </Provider>
-  </React.StrictMode>
+  // <React.StrictMode>
+  <Provider store={store}>
+    <ThemeProvider theme={getTheme('light')}>
+      <BrowserRouter>
+        <LocalizationProvider dateAdapter={AdapterMoment}>
+          <Routes>
+            <Route path="/*" element={<App />} />
+          </Routes>
+          <Toaster
+            toastOptions={{
+              style: {
+                fontFamily: ['Roboto', 'Helvetica', 'Arial', 'sans-serif'],
+              },
+            }}
+          />
+        </LocalizationProvider>
+      </BrowserRouter>
+    </ThemeProvider>
+  </Provider>
+  // </React.StrictMode>
 );
