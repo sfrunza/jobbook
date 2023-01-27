@@ -265,7 +265,7 @@ export default function General() {
                       disableElevation
                       disabled={!isEqual(values, data)}
                     >
-                      Update user
+                      Update
                     </LoadingButton>
                   </Box>
                 </Form>

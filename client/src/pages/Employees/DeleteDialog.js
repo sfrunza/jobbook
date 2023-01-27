@@ -35,16 +35,18 @@ export default function DeleteDialog({ user, currentTab }) {
 
       console.log('delete', data);
 
-      if (data.message === 'user deleted') {
-        toast.success('User Deleted');
+      if (data.message) {
+        toast.success(data.message);
         mutate(`/api/v1/filter_users?&role=${currentTab}&search=`);
+        setLoading(false);
         handleClose();
       } else {
         toast.error(data.error);
+        setLoading(false);
       }
-      setLoading(false);
     } catch (error) {
       console.error('error', error);
+      toast.error(error.message);
       setLoading(false);
     }
   };
