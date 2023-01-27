@@ -1,7 +1,7 @@
 const pages = [
   {
     title: 'Dashboard',
-    href: '/',
+    href: '/dashboard',
   },
   {
     title: 'Employees',

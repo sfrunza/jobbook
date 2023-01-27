@@ -84,7 +84,7 @@ const SidebarNav = ({ pages, onClose }) => {
         marginTop={{ xs: 4, md: 1 }}
         sx={{
           backgroundColor: 'background.level2',
-          borderRadius: '10px',
+          borderRadius: 1,
           fontWeight: 600,
           display: 'flex',
           alignItems: 'center',

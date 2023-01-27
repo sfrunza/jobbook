@@ -8,25 +8,26 @@ import {
   TableRow,
   Typography,
   Paper,
-  Box,
   Avatar,
 } from '@mui/material';
 import DeleteDialog from './DeleteDialog';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'store';
+import Box from '@mui/material/Box';
 
 const UserListTable = (props) => {
   const { users, currentTab } = props;
   const { user } = useSelector((state) => state.auth);
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} sx={{ boxShadow: 'none' }}>
       <Table sx={{ minWidth: 900 }}>
         <TableHead>
           <TableRow>
             <TableCell sx={{ color: 'text.secondary' }}>Name</TableCell>
             <TableCell sx={{ color: 'text.secondary' }}>Phone</TableCell>
             <TableCell sx={{ color: 'text.secondary' }}>Role</TableCell>
+            <TableCell sx={{ color: 'text.secondary' }}>Active</TableCell>
             <TableCell align="right" sx={{ color: 'text.secondary' }}>
               Actions
             </TableCell>
@@ -42,9 +43,10 @@ const UserListTable = (props) => {
                       <Avatar />
                     </Box>
                     <Box flexDirection="column">
-                      <Link to={`/employees/${u.id}`}>
+                      <Link to={`/employees/${u.id}/general`}>
                         <Typography fontWeight={600}>
-                          {u.first_name + ' ' + u.last_name} ({u.username})
+                          {u.id}. {u.first_name + ' ' + u.last_name} (
+                          {u.username})
                         </Typography>
                       </Link>
                       <Typography color={'text.secondary'} variant={'caption'}>
@@ -56,6 +58,34 @@ const UserListTable = (props) => {
                 <TableCell>{u.phone}</TableCell>
                 <TableCell>
                   {u.role && u.role.charAt(0).toUpperCase() + u.role.slice(1)}
+                </TableCell>
+                <TableCell>
+                  {u.active ? (
+                    <Box
+                      sx={{
+                        color: 'success.main',
+                        borderRadius: 2,
+                        border: '1px solid',
+                        paddingX: 1,
+                        width: 'fit-content',
+                      }}
+                    >
+                      Active
+                    </Box>
+                  ) : (
+                    <Box
+                      sx={{
+                        color: 'error.main',
+                        borderRadius: 2,
+                        border: '1px solid',
+                        paddingX: 1,
+                        width: 'fit-content',
+                      }}
+                    >
+                      Not Active
+                    </Box>
+                  )}
+                  {/* {u.active ? 'Active' : 'Not Active'} */}
                 </TableCell>
                 <TableCell align="right">
                   {u.id !== user.id && (

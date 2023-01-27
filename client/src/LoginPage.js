@@ -1,72 +1,155 @@
-import React from 'react';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Container from 'components/Container';
-import { TextField, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
+import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
-import { useDispatch, useSelector } from './store/index';
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
+import Alert from '@mui/material/Alert';
+import { LoadingButton } from '@mui/lab';
+import { useDispatch } from './store/index';
 import { loginUser } from 'slices/auth';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import axios from 'axios';
 
 const LoginPage = () => {
   let navigate = useNavigate();
-  let { isLoggingIn, error } = useSelector((state) => state.auth);
+  const [loginError, setLoginError] = useState(null);
   const dispatch = useDispatch();
 
-  function handleSubmit(event) {
-    event.preventDefault();
+  const login = (user) => {
+    axios
+      .post('/users/sign_in', { user }, { withCredentials: true })
+      .then((res) => {
+        console.log(res);
+        if (res.data.user) {
+          let user = res.data.user;
+          dispatch(loginUser(user));
+        } else {
+          setLoginError(res.data.error);
+          formik.setSubmitting(false);
+        }
+      })
+      .catch((error) => {
+        setLoginError(error.message);
+        formik.setSubmitting(false);
+      });
+  };
 
-    let formData = new FormData(event.currentTarget);
-    let email = formData.get('email');
-    let password = formData.get('password');
-    let data = { email, password };
-    dispatch(loginUser(data, navigate));
-  }
+  const formik = useFormik({
+    initialValues: {
+      email: '',
+      password: '',
+    },
+    validationSchema: Yup.object({
+      email: Yup.string().email('Invalid email address').required('Required'),
+      password: Yup.string().min(6, 'Min 6 characters').required('Required'),
+    }),
+    onSubmit: (values) => {
+      login(values);
+    },
+  });
 
   return (
-    <Container>
-      <form onSubmit={handleSubmit}>
-        <Box
-          display={'flex'}
-          flexDirection={'column'}
-          justifyContent={'center'}
-          mt={20}
+    <Box
+      sx={{
+        bgcolor: 'background.level2',
+        height: '100vh',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
+      <Container>
+        <Card
+          sx={{
+            maxWidth: 500,
+            p: { xs: 3, md: 4 },
+            marginX: 'auto',
+            boxShadow: 'none',
+            border: '1px solid',
+            borderColor: 'divider',
+          }}
+          component="form"
+          onSubmit={formik.handleSubmit}
         >
           <Stack
-            spacing={2}
+            spacing={4}
             direction="column"
             minWidth={{ xs: '100%', sm: 400, md: 400 }}
             margin={'auto'}
           >
-            {error && (
-              <Box sx={{ color: 'error.main' }}>
-                <Typography>{error}</Typography>
-              </Box>
-            )}
-            <TextField name="email" type="text" label="Email" />
-            <TextField name="password" type="password" label="Password" />
-
-            <Button
+            <Typography variant="h4" textAlign="center" fontWeight={500}>
+              Log in
+            </Typography>
+            {/* <Typography>{loginError}</Typography> */}
+            {loginError && <Alert severity="error">{loginError}</Alert>}
+            <Box display="flex" flexDirection="column" gap={1}>
+              <label htmlFor="email">Email</label>
+              <TextField
+                id="email"
+                name="email"
+                type="text"
+                placeholder="Email"
+                onChange={(e) => {
+                  formik.handleChange(e);
+                  setLoginError(null);
+                }}
+                value={formik.values.email}
+                error={formik.touched.email && Boolean(formik.errors.email)}
+              />
+            </Box>
+            <Box display="flex" flexDirection="column" gap={1}>
+              <label htmlFor="password">Password</label>
+              <TextField
+                id="password"
+                name="password"
+                type="password"
+                placeholder="Password"
+                onChange={(e) => {
+                  formik.handleChange(e);
+                  setLoginError(null);
+                }}
+                value={formik.values.password}
+                error={
+                  formik.touched.password && Boolean(formik.errors.password)
+                }
+              />
+            </Box>
+            <LoadingButton
               type="submit"
-              fullWidth
+              loading={formik.isSubmitting}
               variant="contained"
               size="large"
-              disabled={isLoggingIn}
+              disableElevation
             >
-              {isLoggingIn ? 'Loading...' : 'Login'}
-            </Button>
+              Login
+            </LoadingButton>
             <Typography
               component={Link}
               to="/forgot-password"
-              variant="caption"
-              color="textSecondary"
+              color="text.secondary"
             >
-              Forgot password
+              Forgot password?
             </Typography>
           </Stack>
-        </Box>
-      </form>
-    </Container>
+        </Card>
+        <Typography
+          color="text.secondary"
+          sx={{
+            maxWidth: 500,
+            p: 1,
+            marginX: 'auto',
+            textAlign: 'right',
+            fontSize: 10,
+          }}
+        >
+          powered by sfrunza
+        </Typography>
+      </Container>
+    </Box>
   );
 };
 
