@@ -7,6 +7,10 @@ const pages = [
     title: 'Employees',
     href: '/employees',
   },
+  {
+    title: 'Find Job',
+    href: '/find-job',
+  },
 ];
 
 export default pages;

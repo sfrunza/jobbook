@@ -26,10 +26,14 @@ class Api::V1::UsersController < ApplicationController
         @users = User.all.order("id DESC")
         # .sort_by { |a| a.active ? 0 : 1 }
         render json: @users
+      else params[:role]
+        if params[:role] == "active"
+        @users = User.where(active: true)
+        render json: @users
       else
         @users = User.where(role: params[:role])
         render json: @users
-      end
+      end       end
     else
       render json: { message: "Unauthorized", status: 401 }
     end

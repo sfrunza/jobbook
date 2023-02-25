@@ -19,7 +19,6 @@ export default {
     tips: {
       name: 'tips',
       label: 'Tips',
-      requiredErrorMsg: 'Tips is required',
     },
     comments: {
       name: 'comments',

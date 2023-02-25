@@ -37,10 +37,11 @@ const isEqual = (values, user) => {
 };
 
 const validationSchema = Yup.object().shape({
-  firstName: Yup.string().nullable().required('first'),
-  lastName: Yup.string().nullable().required('last'),
-  email: Yup.string().nullable().required('email'),
-  role: Yup.string().nullable().required('role req'),
+  firstName: Yup.string().nullable().required('required'),
+  lastName: Yup.string().nullable().required('required'),
+  username: Yup.string().nullable().required('required'),
+  email: Yup.string().nullable().required('required'),
+  role: Yup.string().nullable().required('required'),
 });
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
@@ -165,6 +166,8 @@ export default function General() {
                         name="username"
                         value={values.username}
                         onChange={handleChange}
+                        error={Boolean(touched.username && errors.username)}
+                        helperText={touched.username && errors.username}
                         fullWidth
                       />
                     </Grid>

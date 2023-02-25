@@ -15,6 +15,7 @@ Rails.application.routes.draw do
 
       get "/available_users", :to => "users#available_users", as: "available_users"
       get "/filter_users", :to => "users#filter_users", as: "filter_users"
+      get "/find_job", :to => "jobs#find_job", as: "find_job"
       post "/reset", :to => "users#reset", as: "reset"
     end
   end
