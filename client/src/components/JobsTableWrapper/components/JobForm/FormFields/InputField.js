@@ -17,6 +17,7 @@ const StyledTextField = styled((props) => <TextField {...props} />)(
 export default function InputField(props) {
   const { errorText, label, ...rest } = props;
   const [field, meta] = useField(props);
+
   return (
     <div>
       <Box
@@ -31,6 +32,7 @@ export default function InputField(props) {
         {...rest}
         size="small"
         type="text"
+        value={field.value ? field.value : ''}
         multiline={field.name === 'comments'}
         rows={2}
         error={meta.touched && meta.error && true}

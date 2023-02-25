@@ -8,6 +8,7 @@ import ForgotPassword from './ForgotPassword';
 import NewPassword from './NewPassword';
 import General from 'pages/Employee/General';
 import UserJobs from 'pages/Employee/Jobs';
+import FindJob from './pages/FindJob';
 import { useSelector } from 'store';
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
             <Route path="/employees" element={<Employees />} />
             <Route path="/employees/:id/general" element={<General />} />
             <Route path="/employees/:id/jobs" element={<UserJobs />} />
+            <Route path="/find-job" element={<FindJob />} />
           </>
         )}
 

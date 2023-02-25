@@ -15,7 +15,7 @@ const {
 export default {
   [date.name]: '',
   [jobId.name]: '',
-  [workTime.name]: 'Work time',
+  [workTime.name]: '',
   [tips.name]: '',
   [comments.name]: '',
   [teammates.name]: [],

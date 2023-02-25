@@ -16,6 +16,17 @@ class Api::V1::JobsController < ApplicationController
     render json: { total_jobs: @total_jobs, total_hours: @total_hours, total_tips: @total_tips, jobs: @jobs }
   end
 
+  def find_job
+    if current_user && current_user.admin
+      if params[:search]
+        @jobs = Job.where(job_id: params[:search].to_i)
+        render json: @jobs, include: ["user"]
+      end
+    else
+      render json: { message: "Unauthorized", status: 401 }
+    end
+  end
+
   def available_months
     if @user.jobs.length > 0
       first = Date.parse(@user.jobs.order("date ASC").first.date)

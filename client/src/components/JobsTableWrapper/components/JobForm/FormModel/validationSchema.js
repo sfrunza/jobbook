@@ -18,16 +18,14 @@ export default [
         (value) =>
           (value + '').match(/^\d*\.{1}\d*$/) || typeof value === 'number'
       ),
-      [tips.name]: Yup.number().when('tips', {
-        is: (exists) => !!exists,
-        then: Yup.number().test(
-          'is-decimal',
-          'invalid decimal',
-          (value) =>
-            (value + '').match(/^\d*\.{1}\d*$/) || typeof value === 'number'
-        ),
-        otherwise: Yup.number(),
-      }),
+      [tips.name]: Yup.number()
+        .nullable()
+        .notRequired()
+        .when('tips', {
+          is: (value) => value?.length,
+          then: (value) =>
+            (value + '').match(/^\d*\.{1}\d*$/) || typeof value === 'number',
+        }),
     },
     [['tips', 'tips']]
   ),

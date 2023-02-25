@@ -22,6 +22,10 @@ const tabs = [
     value: 'all',
   },
   {
+    label: 'Active',
+    value: 'active',
+  },
+  {
     label: 'foreman',
     value: 'foreman',
   },
@@ -38,7 +42,7 @@ const tabs = [
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
 const Employees = () => {
-  const [currentTab, setCurrentTab] = useState('all');
+  const [currentTab, setCurrentTab] = useState('active');
   const [query, setQuery] = useState('');
   const [search, setSearch] = useState('');
   const queryRef = useRef(null);
