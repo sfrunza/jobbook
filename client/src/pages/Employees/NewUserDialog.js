@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState } from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
@@ -7,7 +7,7 @@ import IconButton from '@mui/material/IconButton';
 import NewUserForm from './NewUserForm';
 
 export default function NewUserDialog() {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -25,17 +25,16 @@ export default function NewUserDialog() {
         startIcon={
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6"
             fill="none"
             viewBox="0 0 24 24"
+            strokeWidth={1.5}
             stroke="currentColor"
-            strokeWidth={2}
-            width="22"
+            width={22}
           >
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
-              d="M12 4v16m8-8H4"
+              d="M12 6v12m6-6H6"
             />
           </svg>
         }

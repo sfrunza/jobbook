@@ -115,7 +115,7 @@ const ForgotPassword = () => {
             </Typography>
           </Stack>
         </Card>
-        <Typography
+        {/* <Typography
           color="text.secondary"
           sx={{
             maxWidth: 500,
@@ -126,7 +126,7 @@ const ForgotPassword = () => {
           }}
         >
           powered by sfrunza
-        </Typography>
+        </Typography> */}
       </Container>
     </Box>
   );

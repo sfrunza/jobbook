@@ -5,7 +5,6 @@ import SelectMonth from './components/SelectMonth';
 import useSWR from 'swr';
 import { format } from 'date-fns';
 import { useSearchParams } from 'react-router-dom';
-import moment from 'moment';
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
@@ -25,6 +24,8 @@ export default function JobsTableWrapper({ userId }) {
   const jobs = data?.jobs;
   const totalTips = data?.total_tips;
   const totalHours = data?.total_hours;
+  const totalBoxes = data?.total_boxes;
+  const totalJobs = data?.total_jobs;
 
   useEffect(() => {
     const today = new Date();
@@ -36,7 +37,6 @@ export default function JobsTableWrapper({ userId }) {
     const formatStartDay2 = format(firstDay, 'MMM yyyy');
 
     if (!start && !end) {
-      // setMonthYear(format(new Date(), 'MMM yyyy'));
       setSearchParams({
         start: formatStartDay,
         end: formatEndDay,
@@ -86,7 +86,8 @@ export default function JobsTableWrapper({ userId }) {
         isLoading={isLoading}
         totalTips={totalTips}
         totalHours={totalHours}
-        userId={userId}
+        totalBoxes={totalBoxes}
+        totalJobs={totalJobs}
       />
     </Card>
   );

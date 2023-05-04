@@ -9,11 +9,14 @@ const {
     teammates,
     extraHour,
     minTime,
+    image,
+    role,
+    boxes,
   },
 } = submitFormModel;
 
 export default {
-  [date.name]: '',
+  [date.name]: new Date(),
   [jobId.name]: '',
   [workTime.name]: '',
   [tips.name]: '',
@@ -21,4 +24,7 @@ export default {
   [teammates.name]: [],
   [extraHour.name]: false,
   [minTime.name]: false,
+  [image.name]: [],
+  [role.name]: '',
+  [boxes.name]: '',
 };

@@ -34,8 +34,8 @@ const tabs = [
     value: 'driver',
   },
   {
-    label: 'helper',
-    value: 'helper',
+    label: 'mover',
+    value: 'mover',
   },
 ];
 
@@ -102,51 +102,36 @@ const Employees = () => {
             ))}
           </Tabs>
           <Divider />
-          <Box
-            sx={{
-              alignItems: 'center',
-              display: 'flex',
-              flexWrap: 'wrap',
-              p: 2,
-            }}
-          >
-            <Box
-              component="form"
-              onSubmit={searchUser}
-              sx={{
-                flexGrow: 1,
-                m: 1.5,
+          <Box component="form" onSubmit={searchUser} padding={2}>
+            <TextField
+              value={query}
+              // fullWidth
+              onChange={handleQueryChange}
+              inputProps={{ ref: queryRef }}
+              size="small"
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-6 w-6"
+                      fill="none"
+                      width="22"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={2}
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                      />
+                    </svg>
+                  </InputAdornment>
+                ),
               }}
-            >
-              <TextField
-                value={query}
-                fullWidth
-                onChange={handleQueryChange}
-                inputProps={{ ref: queryRef }}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-6 w-6"
-                        fill="none"
-                        width="22"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        strokeWidth={2}
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                        />
-                      </svg>
-                    </InputAdornment>
-                  ),
-                }}
-                placeholder="Search"
-              />
-            </Box>
+              placeholder="Search"
+            />
           </Box>
           {error && (
             <Box display={'flex'} justifyContent="center" p={2}>
@@ -155,7 +140,7 @@ const Employees = () => {
           )}
           {!data && (
             <Box display={'flex'} justifyContent="center" p={2}>
-              <Spinner />
+              <Spinner withText />
             </Box>
           )}
           {data && <UserListTable users={data} currentTab={currentTab} />}

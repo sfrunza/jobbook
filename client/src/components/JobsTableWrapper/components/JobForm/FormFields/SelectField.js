@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import { at } from 'lodash';
 import { useField } from 'formik';
@@ -45,7 +44,7 @@ function SelectField(props) {
       >
         <option value={''}></option>
         {data.map((item, index) => (
-          <option key={index} value={item} disabled={typeof item === 'string'}>
+          <option key={index} value={item}>
             {item}
           </option>
         ))}

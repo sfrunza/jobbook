@@ -7,6 +7,7 @@ import {
   TableRow,
   Typography,
   Paper,
+  Box,
 } from '@mui/material';
 import moment from 'moment';
 
@@ -27,38 +28,49 @@ const JobListTable = (props) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {jobs?.map((j) => {
+          {jobs?.map((job) => {
             return (
-              <TableRow hover key={j.id}>
+              <TableRow hover key={job.id}>
                 <TableCell>
-                  <Typography fontWeight="bold">{j?.job_id}</Typography>
+                  <Typography fontWeight="bold">{job?.job_id}</Typography>
                 </TableCell>
                 <TableCell>
-                  {moment(j.date).format('ddd, MMM DD YYYY')}
+                  {moment(job.date).format('ddd, MMM DD YYYY')}
                 </TableCell>
                 <TableCell>
-                  {j?.user?.username} ({j?.user?.role})
+                  {job?.user?.username}
+                  <Box gap={0.5} display="flex">
+                    {job?.user?.role_names.map((r) => (
+                      <Typography
+                        color="text.secondary"
+                        variant="caption"
+                        key={r}
+                      >
+                        {r}
+                      </Typography>
+                    ))}
+                  </Box>
                 </TableCell>
                 <TableCell>
                   <Typography
                     component={'span'}
-                    color={!j.min_time ? 'primary' : 'textPrimary'}
+                    color={!job.min_time ? 'primary' : 'textPrimary'}
                   >
-                    {j.work_time}
+                    {job.work_time}
                   </Typography>
                   /
                   <Typography
                     component={'span'}
-                    color={j.extra_hour ? 'primary' : 'textPrimary'}
+                    color={job.extra_hour ? 'primary' : 'textPrimary'}
                   >
-                    {j.extra_hour ? '1' : '*'}
+                    {job.extra_hour ? '1' : '*'}
                   </Typography>
                   /
                   <Typography
                     component={'span'}
-                    color={j.min_time ? 'primary' : 'textPrimary'}
+                    color={job.min_time ? 'primary' : 'textPrimary'}
                   >
-                    {j.min_time ? '5' : '*'}
+                    {job.min_time ? '5' : '*'}
                   </Typography>
                 </TableCell>
               </TableRow>

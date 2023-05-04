@@ -14,3 +14,8 @@ a {
   box-sizing: border-box;
   font-family: 'Roboto', Helvetica, Arial, sans-serif;
 }
+
+.pswp__img {
+  object-fit: contain !important;
+  background-color: transparent !important;
+}

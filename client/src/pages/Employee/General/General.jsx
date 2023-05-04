@@ -11,37 +11,16 @@ import { useParams } from 'react-router-dom';
 import useSWR from 'swr';
 import Spinner from 'components/Spinner';
 import PhoneInput from 'pages/Employees/PhoneInput';
-
-const formattedKey = (word) => {
-  // lastName -> last_name
-  return word
-    .split(/(?=[A-Z])/)
-    .join('_')
-    .toLowerCase();
-};
-
-const isEqual = (values, user) => {
-  if (!user) return null;
-  let arr = Object.keys(values);
-  let eq = false;
-
-  arr.map((item) => {
-    // console.log(user[formattedKey(item)]);
-    if (typeof values[item] === typeof user[formattedKey(item)]) {
-      if (values[item] !== user[formattedKey(item)]) {
-        eq = true;
-      }
-    }
-  });
-  return eq;
-};
+import RoleSelectInput from 'pages/Employees/RoleSelectInput';
 
 const validationSchema = Yup.object().shape({
   firstName: Yup.string().nullable().required('required'),
   lastName: Yup.string().nullable().required('required'),
   username: Yup.string().nullable().required('required'),
   email: Yup.string().nullable().required('required'),
-  role: Yup.string().nullable().required('required'),
+  roleNames: Yup.array()
+    .min(1, 'required at least 1 role')
+    .required('required'),
 });
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
@@ -50,15 +29,13 @@ export default function General() {
   const { id } = useParams();
   const { data, isLoading } = useSWR(`/api/v1/users/${id}`, fetcher);
   const { mutate } = useSWRConfig();
-  //   const { first_name, last_name, email, role, username, admin, active, phone } =
-  //     data;
   const { user: currentUser } = useSelector((state) => state.auth);
 
   let formInitialValues = {
     firstName: data?.first_name,
     lastName: data?.last_name,
     email: data?.email,
-    role: data?.role,
+    roleNames: data?.role_names,
     phone: data?.phone || '',
     active: data?.active,
     username: data?.username,
@@ -72,7 +49,7 @@ export default function General() {
       email: values.email,
       phone: values.phone,
       active: values.active,
-      role: values.role,
+      role_names: values.roleNames,
       admin: values.admin,
       username: values.username,
     };
@@ -109,8 +86,14 @@ export default function General() {
             validationSchema={validationSchema}
             onSubmit={_handleSubmit}
           >
-            {({ isSubmitting, values, handleChange, touched, errors }) => {
-              //   console.log(values);
+            {({
+              isSubmitting,
+              values,
+              handleChange,
+              setFieldValue,
+              touched,
+              errors,
+            }) => {
               return (
                 <Form autoComplete="off">
                   <Grid container spacing={3}>
@@ -129,7 +112,6 @@ export default function General() {
                         value={values.firstName}
                         onChange={handleChange}
                         error={Boolean(touched.firstName && errors.firstName)}
-                        helperText={touched.firstName && errors.firstName}
                         fullWidth
                       />
                     </Grid>
@@ -148,7 +130,6 @@ export default function General() {
                         value={values.lastName}
                         onChange={handleChange}
                         error={Boolean(touched.lastName && errors.lastName)}
-                        helperText={touched.lastName && errors.lastName}
                         fullWidth
                       />
                     </Grid>
@@ -167,7 +148,6 @@ export default function General() {
                         value={values.username}
                         onChange={handleChange}
                         error={Boolean(touched.username && errors.username)}
-                        helperText={touched.username && errors.username}
                         fullWidth
                       />
                     </Grid>
@@ -201,42 +181,26 @@ export default function General() {
                         value={values.email}
                         onChange={handleChange}
                         error={Boolean(touched.email && errors.email)}
-                        helperText={touched.email && errors.email}
                         fullWidth
                       />
                     </Grid>
-                    <Grid item xs={6} md={6}>
+                    <Grid item xs={12} md={12}>
                       <Box
                         component="label"
-                        htmlFor="role"
+                        htmlFor="roleNames"
                         sx={{ fontSize: 14, fontWeight: 500 }}
                       >
-                        Role
+                        Roles
                       </Box>
-                      <TextField
-                        size="small"
-                        id="role"
-                        select
-                        fullWidth
-                        name="role"
-                        SelectProps={{
-                          native: true,
-                        }}
-                        value={values.role}
-                        onChange={handleChange}
-                        error={Boolean(touched.role && errors.role)}
-                        helperText={touched.role && errors.role}
-                      >
-                        <option value={''}></option>
-                        {['helper', 'driver', 'foreman'].map((item, index) => (
-                          <option key={index} value={item}>
-                            {item}
-                          </option>
-                        ))}
-                      </TextField>
+                      <RoleSelectInput
+                        setFieldValue={setFieldValue}
+                        id="roleNames"
+                        name="roleNames"
+                        initVal={values.roleNames}
+                      />
                     </Grid>
                     <Grid item xs={12}>
-                      <Box display={'flex'} alignItems="center">
+                      <Box display="flex" alignItems="center">
                         <Typography variant="body2">Active</Typography>
                         <Switch
                           name="active"
@@ -247,7 +211,7 @@ export default function General() {
                     </Grid>
                     {data?.id !== currentUser.id && (
                       <Grid item xs={12}>
-                        <Box display={'flex'} alignItems="center">
+                        <Box display="flex" alignItems="center">
                           <Typography variant="body2">Admin</Typography>
                           <Switch
                             name="admin"
@@ -258,7 +222,7 @@ export default function General() {
                       </Grid>
                     )}
                   </Grid>
-                  <Box display={'flex'} mt={2} justifyContent="flex-end">
+                  <Box display="flex" mt={2} justifyContent="flex-end">
                     <LoadingButton
                       type="submit"
                       loading={isSubmitting}
@@ -266,7 +230,6 @@ export default function General() {
                       color="primary"
                       size="large"
                       disableElevation
-                      disabled={!isEqual(values, data)}
                     >
                       Update
                     </LoadingButton>

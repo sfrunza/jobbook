@@ -1,17 +1,34 @@
-import React from 'react';
 import { useField } from 'formik';
 import Box from '@mui/material/Box';
 import { Checkbox, FormControlLabel, Switch, Typography } from '@mui/material';
-import { FileDownload } from '@mui/icons-material';
 
 export default function CheckBoxField(props) {
-  const { errorText, label, ...rest } = props;
+  const { errorText, label, setFieldValue, ...rest } = props;
   const [field] = useField(props);
+
+  const handleChnage = (e) => {
+    const name = e.target.name;
+    const value = e.target.checked;
+
+    if (name === 'minTime') {
+      setFieldValue('minTime', value);
+      if (value) {
+        setFieldValue('extraHour', false);
+      }
+    }
+    if (name === 'extraHour') {
+      setFieldValue('extraHour', value);
+      if (value) {
+        setFieldValue('minTime', false);
+      }
+    }
+  };
 
   return (
     <FormControlLabel
       {...rest}
       {...field}
+      onChange={handleChnage}
       checked={field.value}
       control={<Checkbox />}
       label={
@@ -23,7 +40,7 @@ export default function CheckBoxField(props) {
           {label}
         </Box>
       }
-      labelPlacement="start"
+      labelPlacement="top"
       sx={{ m: 0 }}
     />
   );

@@ -7,11 +7,28 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
+      resources :jobs do
+        resources :images
+      end
       resources :users do
         resources :user_jobs
         get "/available_months", :to => "user_jobs#available_months", as: "available_months"
         get "/filtered_jobs", :to => "user_jobs#filtered_jobs", as: "filtered_jobs"
       end
+
+      # resources :posts
+      resources :posts do
+        resources :photos
+      end
+
+      resources :trucks do
+        # resources :posts
+        # get "/available_months", :to => "user_jobs#available_months", as: "available_months"
+        # get "/filtered_jobs", :to => "user_jobs#filtered_jobs", as: "filtered_jobs"
+      end
+
+      # resources :trucks
+      # resources :posts
 
       get "/available_users", :to => "users#available_users", as: "available_users"
       get "/filter_users", :to => "users#filter_users", as: "filter_users"

@@ -45,6 +45,10 @@ gem "devise", github: "heartcombo/devise", ref: "f8d1ea90bc3"
 gem "rack-cors", :require => "rack/cors"
 gem "figaro"
 gem "mail_form"
+gem "carrierwave-aws"
+gem "carrierwave", "~> 2.2.3"
+gem "active_model_serializers"
+gem "pg_search"
 
 # Use Sass to process CSS
 # gem "sassc-rails"

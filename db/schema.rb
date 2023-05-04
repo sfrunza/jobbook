@@ -10,15 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_05_185004) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_02_214638) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "images", force: :cascade do |t|
+    t.string "image"
+    t.bigint "job_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["job_id"], name: "index_images_on_job_id"
+  end
 
   create_table "jobs", force: :cascade do |t|
     t.string "job_id"
     t.string "date"
     t.float "work_time"
     t.float "tips"
+    t.integer "boxes"
     t.text "comments"
     t.string "teammates", default: [], array: true
     t.bigint "user_id"
@@ -27,6 +36,30 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_05_185004) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_jobs_on_user_id"
+  end
+
+  create_table "photos", force: :cascade do |t|
+    t.string "photo"
+    t.bigint "post_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["post_id"], name: "index_photos_on_post_id"
+  end
+
+  create_table "posts", force: :cascade do |t|
+    t.string "date"
+    t.bigint "user_id"
+    t.bigint "truck_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["truck_id"], name: "index_posts_on_truck_id"
+    t.index ["user_id"], name: "index_posts_on_user_id"
+  end
+
+  create_table "trucks", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -39,7 +72,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_05_185004) do
     t.string "last_name"
     t.string "username"
     t.string "phone"
-    t.string "role"
+    t.string "role_names", default: [], array: true
     t.boolean "admin", default: false
     t.boolean "active", default: true
     t.datetime "created_at", null: false

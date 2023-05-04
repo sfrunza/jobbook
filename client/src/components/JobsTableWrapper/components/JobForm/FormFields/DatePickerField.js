@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
 import { useField } from 'formik';
-import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import { styled } from '@mui/material/styles';
 import { DesktopDatePicker } from '@mui/x-date-pickers';
 import moment from 'moment';
 import Box from '@mui/material/Box';
+import { useSelector } from 'store';
 
 const StyledTextField = styled((props) => <TextField {...props} />)(
   ({ theme }) => ({
@@ -17,20 +16,16 @@ const StyledTextField = styled((props) => <TextField {...props} />)(
 );
 
 export default function DatePickerField(props) {
+  const { user } = useSelector((state) => state.auth);
   const [field, meta, helper] = useField(props);
   const { touched, error } = meta;
   const { setValue } = helper;
   const isError = touched && Boolean(error);
   const { value } = field;
-  // const [selectedDate, setSelectedDate] = useState(new Date());
   const { label, ...rest } = props;
 
-  // useEffect(() => {
-  //   if (value) {
-  //     const date = new Date(value);
-  //     setSelectedDate(date);
-  //   }
-  // }, [value]);
+  const yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
 
   function _onChange(date) {
     const newDate = new Date(date);
@@ -49,6 +44,8 @@ export default function DatePickerField(props) {
       <DesktopDatePicker
         {...field}
         {...rest}
+        // disablePast={!user?.admin}
+        minDate={user?.admin ? '' : yesterday.toDateString()}
         name="date"
         value={value || ''}
         format="yyyy-mm-dd"

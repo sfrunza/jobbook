@@ -5,6 +5,7 @@ class CreateJobs < ActiveRecord::Migration[7.0]
       t.string :date
       t.float :work_time
       t.float :tips
+      t.integer :boxes
       t.text :comments
       t.string :teammates, array: true, default: []
       t.belongs_to :user, index: true

@@ -156,7 +156,7 @@ const NewPassword = () => {
             </Typography>
           </Stack>
         </Card>
-        <Typography
+        {/* <Typography
           color="text.secondary"
           sx={{
             maxWidth: 500,
@@ -167,7 +167,7 @@ const NewPassword = () => {
           }}
         >
           powered by sfrunza
-        </Typography>
+        </Typography> */}
       </Container>
     </Box>
   );
