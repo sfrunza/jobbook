@@ -1,12 +1,15 @@
 import React from 'react';
-import { Box, Grid, TextField } from '@mui/material';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import TextField from '@mui/material/TextField';
+import { LoadingButton } from '@mui/lab';
 import { Formik, Form } from 'formik';
 import toast from 'react-hot-toast';
 import { useSWRConfig } from 'swr';
-import { LoadingButton } from '@mui/lab';
 import * as Yup from 'yup';
 import axios from 'axios';
 import PhoneInput from './PhoneInput';
+import RoleSelectInput from './RoleSelectInput';
 
 const formInitialValues = {
   firstName: '',
@@ -15,7 +18,7 @@ const formInitialValues = {
   phone: '',
   password: '',
   passwordConfirmation: '',
-  role: '',
+  roleNames: [],
   username: '',
 };
 
@@ -28,7 +31,9 @@ const validationSchema = Yup.object().shape({
   passwordConfirmation: Yup.string()
     .required('required')
     .oneOf([Yup.ref('password')], 'passwords do not match.'),
-  role: Yup.string().nullable().required('required'),
+  roleNames: Yup.array()
+    .min(1, 'required at least 1 role')
+    .required('required'),
 });
 
 export default function NewUserForm({ handleClose }) {
@@ -42,7 +47,7 @@ export default function NewUserForm({ handleClose }) {
       phone: values.phone,
       password: values.password,
       password_confirmation: values.passwordConfirmation,
-      role: values.role,
+      role_names: values.roleNames,
       username: values.username,
     };
 
@@ -59,41 +64,12 @@ export default function NewUserForm({ handleClose }) {
           toast.error('Something went wrong');
           actions.setSubmitting(false);
         }
-        // console.log(res);
       })
       .catch((err) => {
         console.log(err);
         toast.error(err.message);
         actions.setSubmitting(false);
       });
-    // try {
-    //   const resp = await fetch('/api/v1/users', {
-    //     method: 'POST',
-    //     headers: { 'Content-Type': 'application/json' },
-    //     body: JSON.stringify(user),
-    //   });
-    //   let newJob = await resp.json();
-
-    //   if (newJob.id) {
-    //     toast.success('User Added');
-    //     actions.resetForm();
-    //     mutate('/api/v1/filter_users?&role=all&search=');
-    //     handleClose();
-    //   } else {
-    //     const errArray = [];
-    //     for (const key in newJob) {
-    //       if (newJob.hasOwnProperty(key)) {
-    //         let str = key + ' ' + newJob[key];
-    //         errArray.push(str);
-    //       }
-    //     }
-    //     toast.error(errArray);
-    //   }
-
-    //   actions.setSubmitting(false);
-    // } catch (error) {
-    //   console.error('error', error);
-    // }
   }
 
   function _handleSubmit(values, actions) {
@@ -107,7 +83,14 @@ export default function NewUserForm({ handleClose }) {
         validationSchema={validationSchema}
         onSubmit={_handleSubmit}
       >
-        {({ isSubmitting, values, handleChange, touched, errors }) => {
+        {({
+          isSubmitting,
+          values,
+          handleChange,
+          setFieldValue,
+          touched,
+          errors,
+        }) => {
           return (
             <Form autoComplete="off">
               <Grid container spacing={2}>
@@ -126,7 +109,6 @@ export default function NewUserForm({ handleClose }) {
                     value={values.firstName}
                     onChange={handleChange}
                     error={Boolean(touched.firstName && errors.firstName)}
-                    helperText={touched.firstName && errors.firstName}
                     fullWidth
                   />
                 </Grid>
@@ -145,7 +127,6 @@ export default function NewUserForm({ handleClose }) {
                     value={values.lastName}
                     onChange={handleChange}
                     error={Boolean(touched.lastName && errors.lastName)}
-                    helperText={touched.lastName && errors.lastName}
                     fullWidth
                   />
                 </Grid>
@@ -164,7 +145,6 @@ export default function NewUserForm({ handleClose }) {
                     value={values.username}
                     onChange={handleChange}
                     error={Boolean(touched.username && errors.username)}
-                    helperText={touched.username && errors.username}
                     fullWidth
                   />
                 </Grid>
@@ -176,32 +156,7 @@ export default function NewUserForm({ handleClose }) {
                   >
                     Phone
                   </Box>
-                  {/* <PhoneInput
-                    size="small"
-                    id="phone"
-                    name="phone"
-                    value={values.phone}
-                    onChange={handleChange}
-                    fullWidth
-                  /> */}
                   <PhoneInput size="small" id="phone" name="phone" fullWidth />
-                  {/* <Box
-                    component="label"
-                    htmlFor="phone"
-                    sx={{ fontSize: 14, fontWeight: 500 }}
-                  >
-                    Phone
-                  </Box>
-                  <TextField
-                    size="small"
-                    id="phone"
-                    name="phone"
-                    value={values.phone}
-                    onChange={handleChange}
-                    error={Boolean(touched.phone && errors.phone)}
-                    helperText={touched.phone && errors.phone}
-                    fullWidth
-                  /> */}
                 </Grid>
                 <Grid item xs={12}>
                   <Box
@@ -218,7 +173,6 @@ export default function NewUserForm({ handleClose }) {
                     value={values.email}
                     onChange={handleChange}
                     error={Boolean(touched.email && errors.email)}
-                    helperText={touched.email && errors.email}
                     fullWidth
                   />
                 </Grid>
@@ -238,7 +192,6 @@ export default function NewUserForm({ handleClose }) {
                     value={values.password}
                     onChange={handleChange}
                     error={Boolean(touched.password && errors.password)}
-                    helperText={touched.password && errors.password}
                     fullWidth
                   />
                 </Grid>
@@ -261,60 +214,23 @@ export default function NewUserForm({ handleClose }) {
                       touched.passwordConfirmation &&
                         errors.passwordConfirmation
                     )}
-                    helperText={
-                      touched.passwordConfirmation &&
-                      errors.passwordConfirmation
-                    }
                     fullWidth
                   />
                 </Grid>
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12} md={12}>
                   <Box
                     component="label"
-                    htmlFor="role"
+                    htmlFor="roleNames"
                     sx={{ fontSize: 14, fontWeight: 500 }}
                   >
-                    Role
+                    Roles
                   </Box>
-                  <TextField
-                    size="small"
-                    id="role"
-                    select
-                    fullWidth
-                    name="role"
-                    SelectProps={{
-                      native: true,
-                    }}
-                    value={values.role}
-                    onChange={handleChange}
-                    error={Boolean(touched.role && errors.role)}
-                    helperText={touched.role && errors.role}
-                  >
-                    <option value={''}></option>
-                    {['helper', 'driver', 'foreman'].map((item, index) => (
-                      <option key={index} value={item}>
-                        {item}
-                      </option>
-                    ))}
-                  </TextField>
-                </Grid>
-                {/* <Grid item xs={12} md={6}>
-                  <TextField
-                    name="passwordConfirmation"
-                    label="Confirm Password"
-                    value={values.passwordConfirmation}
-                    onChange={handleChange}
-                    error={Boolean(
-                      touched.passwordConfirmation &&
-                        errors.passwordConfirmation
-                    )}
-                    helperText={
-                      touched.passwordConfirmation &&
-                      errors.passwordConfirmation
-                    }
-                    fullWidth
+                  <RoleSelectInput
+                    setFieldValue={setFieldValue}
+                    id="roleNames"
+                    name="roleNames"
                   />
-                </Grid> */}
+                </Grid>
               </Grid>
               <Box display={'flex'} mt={2} justifyContent="flex-end">
                 <LoadingButton

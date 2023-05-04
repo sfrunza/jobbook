@@ -1,6 +1,5 @@
 class Api::V1::UsersController < ApplicationController
   before_action :set_users, only: %i[ show edit update destroy ]
-  # before_action :authenticate_user!,  only: %i[ show edit update destroy filter_users user_jobs ]
   wrap_parameters :user, include: [:first_name, :last_name, :role, :username, :email, :password, :password_confirmation, :reset_password_token, :admin]
 
   def index
@@ -28,10 +27,10 @@ class Api::V1::UsersController < ApplicationController
         render json: @users
       else params[:role]
         if params[:role] == "active"
-        @users = User.where(active: true)
+        @users = User.where(active: true).order("id DESC")
         render json: @users
       else
-        @users = User.where(role: params[:role])
+        @users = User.where("? = ANY (role_names) and (active) = ?", params[:role], true).order("id DESC")
         render json: @users
       end       end
     else
@@ -144,6 +143,6 @@ class Api::V1::UsersController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def user_params
-    params.fetch(:user, {}).permit(:id, :first_name, :last_name, :email, :phone, :active, :role, :admin, :username, :password, :password_confirmation, :reset_password_token)
+    params.fetch(:user, {}).permit(:id, :first_name, :last_name, :email, :phone, :active, :admin, :username, :password, :password_confirmation, :reset_password_token, :role_names => [])
   end
 end

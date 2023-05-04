@@ -9,21 +9,13 @@ class Api::V1::UserJobsController < ApplicationController
       date_range = Date.parse(start_date)..Date.parse(end_date)
 
       @jobs = @user.jobs.where(:date => date_range).order("date DESC")
+
       @total_jobs = @jobs.length
       @total_tips = @jobs.sum(:tips)
+      @total_boxes = @jobs.sum(:boxes)
       @total_hours = sum(@jobs)
-      render json: { total_jobs: @total_jobs, total_hours: @total_hours, total_tips: @total_tips, jobs: @jobs }
-      # else
-      #   month_date_to_search = Date.new(params[:year].to_i, params[:month].to_i, 1)
-      #   start_from = month_date_to_search.beginning_of_month
-      #   finish = Date.civil(params[:year].to_i, params[:month].to_i, -1)
-
-      #   @jobs = @user.jobs.where(:date => start_from..finish).order("date DESC")
-
-      #   @total_jobs = @user.jobs.length
-      #   @total_tips = @jobs.sum(:tips)
-      #   @total_hours = sum(@jobs)
-      #   render json: { total_jobs: @total_jobs, total_hours: @total_hours, total_tips: @total_tips, jobs: @jobs }
+      render json: { total_jobs: @total_jobs, total_hours: @total_hours, total_tips: @total_tips, total_boxes: @total_boxes,
+                     :jobs => ActiveModelSerializers::SerializableResource.new(@jobs, each_serializer: JobSerializer) }
     end
   end
 
@@ -111,6 +103,6 @@ class Api::V1::UserJobsController < ApplicationController
   end
 
   def job_params
-    params.fetch(:job, {}).permit(:date, :job_id, :work_time, :tips, :comments, :user_id, :extra_hour, :min_time, :teammates => [])
+    params.fetch(:job, {}).permit(:date, :job_id, :work_time, :tips, :boxes, :comments, :user_id, :extra_hour, :min_time, :teammates => [])
   end
 end

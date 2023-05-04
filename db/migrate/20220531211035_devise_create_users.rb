@@ -36,7 +36,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[7.0]
       t.string :last_name
       t.string :username
       t.string :phone
-      t.string :role
+      t.string :role_names, array: true, default: []
       t.boolean :admin, default: false
       t.boolean :active, default: true
 

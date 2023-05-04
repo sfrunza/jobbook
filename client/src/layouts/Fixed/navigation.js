@@ -11,6 +11,14 @@ const pages = [
     title: 'Find Job',
     href: '/find-job',
   },
+  {
+    title: 'Trucks',
+    href: '/trucks',
+  },
+  {
+    title: 'Truck Photos',
+    href: '/truck-photos',
+  },
 ];
 
 export default pages;

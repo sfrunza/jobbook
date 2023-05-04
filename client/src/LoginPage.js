@@ -23,7 +23,7 @@ const LoginPage = () => {
     axios
       .post('/users/sign_in', { user }, { withCredentials: true })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         if (res.data.user) {
           let user = res.data.user;
           dispatch(loginUser(user));
@@ -136,7 +136,7 @@ const LoginPage = () => {
             </Typography>
           </Stack>
         </Card>
-        <Typography
+        {/* <Typography
           color="text.secondary"
           sx={{
             maxWidth: 500,
@@ -147,7 +147,7 @@ const LoginPage = () => {
           }}
         >
           powered by sfrunza
-        </Typography>
+        </Typography> */}
       </Container>
     </Box>
   );

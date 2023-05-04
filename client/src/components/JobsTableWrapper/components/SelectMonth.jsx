@@ -45,7 +45,6 @@ export default function SelectMonth({
           {data?.months && startDate && (
             <TextField
               select
-              // fullWidth
               size="small"
               value={value}
               SelectProps={{

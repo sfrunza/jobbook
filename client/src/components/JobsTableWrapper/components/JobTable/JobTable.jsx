@@ -1,4 +1,3 @@
-import React from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
@@ -6,12 +5,11 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import moment from 'moment';
+import TableFooter from '@mui/material/TableFooter';
 import { styled } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import { Skeleton, TableFooter, Typography } from '@mui/material';
-import DeleteDialog from './DeleteDialog';
-import EditDialog from './EditDialog';
+import JobTableRow from './JobTableRow';
+import JobTableSkeleton from './JobTableSkeleton';
+import { useSelector } from 'store';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -23,141 +21,70 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
 }));
 
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  '&:nth-of-type(odd)': {
-    backgroundColor: theme.palette.background.level2,
-  },
-  // hide last border
-  '&:last-child td, &:last-child th': {
-    border: 0,
-  },
-}));
-
 export default function JobTable({
   jobs,
   isLoading,
   totalTips,
   totalHours,
-  userId,
+  totalBoxes,
+  totalJobs,
 }) {
+  const { user } = useSelector((state) => state.auth);
+  const showForForeman = user?.role_names.includes('foreman');
   return (
-    <React.Fragment>
-      <TableContainer component={Paper} sx={{ boxShadow: 'none' }}>
-        <Table sx={{ minWidth: 850 }} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <StyledTableCell>Date</StyledTableCell>
-              <StyledTableCell align="center">Job ID</StyledTableCell>
-              <StyledTableCell align="center">
-                workT/extraT/minT
-              </StyledTableCell>
-              <StyledTableCell align="center">C/C Tips</StyledTableCell>
-              <StyledTableCell align="center">Teammates</StyledTableCell>
-              <StyledTableCell align="center">Comments</StyledTableCell>
-              <StyledTableCell align="center">Actions</StyledTableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {isLoading && (
-              <StyledTableRow
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-              >
-                <StyledTableCell component="th" scope="row">
-                  <Skeleton variant="text" sx={{ fontSize: 45 }} />
-                </StyledTableCell>
-                <StyledTableCell align="center">
-                  <Skeleton variant="text" sx={{ fontSize: 45 }} />
-                </StyledTableCell>
-                <StyledTableCell align="center">
-                  <Skeleton variant="text" sx={{ fontSize: 45 }} />
-                </StyledTableCell>
-                <StyledTableCell align="center">
-                  <Skeleton variant="text" sx={{ fontSize: 45 }} />
-                </StyledTableCell>
-                <StyledTableCell align="center">
-                  <Skeleton variant="text" sx={{ fontSize: 45 }} />
-                </StyledTableCell>
-                <StyledTableCell align="center">
-                  <Skeleton variant="text" sx={{ fontSize: 45 }} />
-                </StyledTableCell>
-                <StyledTableCell align="center"></StyledTableCell>
-              </StyledTableRow>
+    <TableContainer component={Paper} sx={{ boxShadow: 'none' }}>
+      <Table sx={{ minWidth: 910 }} size="small">
+        <TableHead>
+          <TableRow>
+            {showForForeman && <StyledTableCell />}
+            <StyledTableCell>Date</StyledTableCell>
+            <StyledTableCell align="center">Job ID</StyledTableCell>
+            <StyledTableCell align="center">workT/extraT/minT</StyledTableCell>
+            <StyledTableCell align="center">C/C Tips</StyledTableCell>
+            {showForForeman && (
+              <StyledTableCell align="center">TV Box</StyledTableCell>
             )}
-            {jobs?.map((job, i) => (
-              <StyledTableRow
-                key={i}
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-              >
-                <StyledTableCell component="th" scope="row">
-                  {moment(job.date).format('ddd, MMM DD')}
-                </StyledTableCell>
-                <StyledTableCell align="center">{job.job_id}</StyledTableCell>
-                <StyledTableCell align="center">
-                  <Typography
-                    component={'span'}
-                    color={!job.min_time ? 'primary' : 'textPrimary'}
-                  >
-                    {job.work_time}
-                  </Typography>
-                  /
-                  <Typography
-                    component={'span'}
-                    color={job.extra_hour ? 'primary' : 'textPrimary'}
-                  >
-                    {job.extra_hour ? '1' : '*'}
-                  </Typography>
-                  /
-                  <Typography
-                    component={'span'}
-                    color={job.min_time ? 'primary' : 'textPrimary'}
-                  >
-                    {job.min_time ? '5' : '*'}
-                  </Typography>
-                </StyledTableCell>
-                <StyledTableCell align="center">{job.tips}</StyledTableCell>
-                <StyledTableCell align="center">
-                  <Box
-                    display={'flex'}
-                    flexWrap={'wrap'}
-                    justifyContent={'flex-end'}
-                  >
-                    {job.teammates.map((u, i) => (
-                      <p key={i} style={{ fontSize: 12, marginRight: 4 }}>
-                        {u}
-                        {i === job.teammates.length - 1 ? null : ','}
-                      </p>
-                    ))}
-                  </Box>
-                </StyledTableCell>
-                <StyledTableCell align="center">{job.comments}</StyledTableCell>
-                <StyledTableCell align="center">
-                  <Box>
-                    <Box mb={0.5}>
-                      <EditDialog job={job} userId={userId} />
-                    </Box>
-                    <Box>
-                      <DeleteDialog jobId={job.id} userId={userId} />
-                    </Box>
-                  </Box>
-                </StyledTableCell>
-              </StyledTableRow>
-            ))}
-          </TableBody>
-          <TableFooter>
-            <TableRow>
-              <StyledTableCell>Total</StyledTableCell>
-              <StyledTableCell align="center"></StyledTableCell>
-              <StyledTableCell align="center">{totalHours}</StyledTableCell>
-              <StyledTableCell align="center">
-                {totalTips?.toFixed(2)}
-              </StyledTableCell>
-              <StyledTableCell align="center"></StyledTableCell>
-              <StyledTableCell align="center"></StyledTableCell>
-              <StyledTableCell align="center"></StyledTableCell>
-            </TableRow>
-          </TableFooter>
-        </Table>
-      </TableContainer>
-    </React.Fragment>
+            {showForForeman && (
+              <StyledTableCell align="center">Teammates</StyledTableCell>
+            )}
+            {showForForeman && (
+              <StyledTableCell align="center">Comments</StyledTableCell>
+            )}
+            {user?.admin && (
+              <StyledTableCell align="center">Actions</StyledTableCell>
+            )}
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {isLoading && <JobTableSkeleton />}
+          {jobs?.map((job) => (
+            <JobTableRow
+              key={job.id}
+              job={job}
+              userId={job.user.id}
+              showForForeman={showForForeman}
+            />
+          ))}
+        </TableBody>
+        <TableFooter>
+          <TableRow>
+            <StyledTableCell>Total</StyledTableCell>
+            {showForForeman && <StyledTableCell />}
+            <StyledTableCell align="center">{totalJobs}</StyledTableCell>
+            <StyledTableCell align="center">{totalHours}</StyledTableCell>
+            <StyledTableCell align="center">
+              {totalTips?.toFixed(2)}
+            </StyledTableCell>
+            {showForForeman && (
+              <StyledTableCell align="center">{totalBoxes}</StyledTableCell>
+            )}
+            {/* <StyledTableCell align="center" /> */}
+            {showForForeman && <StyledTableCell align="center" />}
+            {showForForeman && <StyledTableCell align="center" />}
+            {user?.admin && <StyledTableCell align="center" />}
+          </TableRow>
+        </TableFooter>
+      </Table>
+    </TableContainer>
   );
 }

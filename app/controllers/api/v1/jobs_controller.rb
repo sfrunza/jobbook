@@ -19,8 +19,8 @@ class Api::V1::JobsController < ApplicationController
   def find_job
     if current_user && current_user.admin
       if params[:search]
-        @jobs = Job.where(job_id: params[:search].to_i)
-        render json: @jobs, include: ["user"]
+        @jobs = Job.search(params[:search])
+        render json: { :jobs => ActiveModelSerializers::SerializableResource.new(@jobs, each_serializer: JobSerializer) }
       end
     else
       render json: { message: "Unauthorized", status: 401 }
@@ -50,25 +50,12 @@ class Api::V1::JobsController < ApplicationController
     return sum
   end
 
-  def doit(first, last)
-    first = first << 1
-    (12 * last.year + last.month - 12 * first.year - first.month + 1).
-      times.map { |i| (first = first >> 1).strftime("%b %Y") }
-  end
-
   # GET /jobs/1 or /jobs/1.json
   def show
     @jobs = current_user.jobs
     @job = @jobs.find(params[:id])
     render json: @job
   end
-
-  # def available_months
-  #   first = Date.parse(current_user.jobs.order("date ASC").first.date)
-  #   last = Date.parse(current_user.jobs.order("date ASC").last.date)
-  #   @months = current_user.jobs.map { |job| Date.parse(job.date).strftime("%b %Y") }.uniq
-  #   render json: { months: @months }
-  # end
 
   def selected_month
     # @jobs = current_user.jobs
@@ -84,11 +71,6 @@ class Api::V1::JobsController < ApplicationController
 
   # GET /jobs/1/edit
   def edit
-    # if @job.update(job_params)
-    #   render json: @job
-    # else
-    #   render json: @job.errors, status: :unprocessable_entity
-    # end
   end
 
   # job /jobs or /jobs.json
@@ -106,15 +88,6 @@ class Api::V1::JobsController < ApplicationController
 
   # PATCH/PUT /jobs/1 or /jobs/1.json
   def update
-    # respond_to do |format|
-    #   if @job.update(job_params)
-    #     # format.html { redirect_to job_url(@job), notice: "job was successfully updated." }
-    #     format.json { render json: @job, status: :ok }
-    #   else
-    #     # format.html { render :edit, status: :unprocessable_entity }
-    #     format.json { render json: @job.errors, status: :unprocessable_entity }
-    #   end
-    # end
     if @job.update(job_params)
       render json: {
                status: :accepted,
@@ -134,14 +107,6 @@ class Api::V1::JobsController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
-  # def set_job
-  #   @job = Job.find(params[:id])
-  # rescue => e
-  #   logger.info e
-  #   render json: { message: "job id not found" }, status: :not_found
-  # end
-
   def set_user
     @user = User.find(params[:user_id])
   rescue => e
@@ -158,6 +123,6 @@ class Api::V1::JobsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def job_params
-    params.fetch(:job, {}).permit(:date, :job_id, :work_time, :tips, :comments, :user_id, :extra_hour, :min_time, :teammates => [])
+    params.fetch(:job, {}).permit(:date, :job_id, :work_time, :tips, :boxes, :comments, :user_id, :extra_hour, :min_time, :teammates => [])
   end
 end

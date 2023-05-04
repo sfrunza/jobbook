@@ -36,5 +36,19 @@ export default {
       name: 'minTime',
       label: 'Min 5h',
     },
+    image: {
+      name: 'image',
+      label: 'image',
+      requiredErrorMsg: 'required at least 1 file',
+    },
+    role: {
+      name: 'role',
+      label: 'Role',
+      requiredErrorMsg: 'required',
+    },
+    boxes: {
+      name: 'boxes',
+      label: 'TV Box',
+    },
   },
 };

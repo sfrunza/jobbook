@@ -8,7 +8,9 @@ import ForgotPassword from './ForgotPassword';
 import NewPassword from './NewPassword';
 import General from 'pages/Employee/General';
 import UserJobs from 'pages/Employee/Jobs';
-import FindJob from './pages/FindJob';
+import FindJob from 'pages/FindJob';
+import Trucks from 'pages/Trucks';
+import TruckImages from 'pages/TruckImages/TruckImages';
 import { useSelector } from 'store';
 
 function App() {
@@ -23,12 +25,16 @@ function App() {
 
       <Route element={<PrivateRoute />}>
         <Route path="/dashboard" element={<Jobs />} />
+        {(user?.admin || user?.role_names.includes('driver')) && (
+          <Route path="/truck-photos" element={<TruckImages />} />
+        )}
         {user?.admin && (
           <>
             <Route path="/employees" element={<Employees />} />
             <Route path="/employees/:id/general" element={<General />} />
             <Route path="/employees/:id/jobs" element={<UserJobs />} />
             <Route path="/find-job" element={<FindJob />} />
+            <Route path="/trucks" element={<Trucks />} />
           </>
         )}
 

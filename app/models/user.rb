@@ -5,6 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :jobs, dependent: :destroy
+  has_many :posts, dependent: :destroy
 
   def password_token_valid?
     (self.reset_password_sent_at + 4.hours) > Time.now.utc
@@ -14,5 +15,9 @@ class User < ApplicationRecord
     self.reset_password_token = nil
     self.password = password
     save!
+  end
+
+  def active_for_authentication?
+    super and self.active?
   end
 end

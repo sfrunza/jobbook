@@ -42,10 +42,18 @@ const SidebarNav = ({ pages, onClose }) => {
   const theme = useTheme();
   let location = useLocation();
   const { user } = useSelector((state) => state.auth);
-  let pg = new Array(pages[0]);
+  let pg = null;
+
   if (user && user.admin) {
     pg = pages;
+  } else if (user && user.role_names.includes('driver')) {
+    pg = pages.filter(
+      (p) => p.title === 'Dashboard' || p.title === 'Truck Photos'
+    );
+  } else {
+    pg = pages.filter((p) => p.title === 'Dashboard');
   }
+
   return (
     <Box paddingBottom={2}>
       <Box

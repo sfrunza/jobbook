@@ -25,7 +25,7 @@ const UserListTable = (props) => {
           <TableRow>
             <TableCell sx={{ color: 'text.secondary' }}>Name</TableCell>
             <TableCell sx={{ color: 'text.secondary' }}>Phone</TableCell>
-            <TableCell sx={{ color: 'text.secondary' }}>Role</TableCell>
+            <TableCell sx={{ color: 'text.secondary' }}>Roles</TableCell>
             <TableCell sx={{ color: 'text.secondary' }}>Active</TableCell>
             <TableCell align="right" sx={{ color: 'text.secondary' }}>
               Actions
@@ -56,7 +56,13 @@ const UserListTable = (props) => {
                 </TableCell>
                 <TableCell>{u.phone}</TableCell>
                 <TableCell>
-                  {u.role && u.role.charAt(0).toUpperCase() + u.role.slice(1)}
+                  <Box display="flex" gap={0.5}>
+                    {u.role_names.map((role) => (
+                      <Typography variant="caption" key={role}>
+                        {role}
+                      </Typography>
+                    ))}
+                  </Box>
                 </TableCell>
                 <TableCell>
                   {u.active ? (
