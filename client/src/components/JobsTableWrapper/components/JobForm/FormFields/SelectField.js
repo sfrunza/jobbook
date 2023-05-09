@@ -39,7 +39,7 @@ function SelectField(props) {
         SelectProps={{
           native: true,
         }}
-        value={selectedValue}
+        value={selectedValue || ''}
         error={isError}
       >
         <option value={''}></option>
