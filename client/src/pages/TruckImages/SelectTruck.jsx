@@ -59,10 +59,16 @@ export default function SelectTruck({ handleSelect, handleFilter }) {
               label="From"
               value={start}
               onChange={(d) => {
-                let formattedDate = moment(new Date(d)).format('YYYY-MM-DD');
-                setStart(formattedDate);
+                // let formattedDate = moment(new Date(d)).format('YYYY-MM-DD');
+                setStart(d);
               }}
-              renderInput={(params) => <TextField {...params} size="small" />}
+              slotProps={{
+                textField: {
+                  size: 'small',
+                  fullWidth: true,
+                },
+              }}
+              // renderInput={(params) => <TextField {...params} size="small" />}
             />
           </div>
           <div>
@@ -70,10 +76,16 @@ export default function SelectTruck({ handleSelect, handleFilter }) {
               label="To"
               value={end}
               onChange={(d) => {
-                let formattedDate = moment(new Date(d)).format('YYYY-MM-DD');
-                setEnd(formattedDate);
+                // let formattedDate = moment(new Date(d)).format('YYYY-MM-DD');
+                setEnd(d);
               }}
-              renderInput={(params) => <TextField {...params} size="small" />}
+              slotProps={{
+                textField: {
+                  size: 'small',
+                  fullWidth: true,
+                },
+              }}
+              // renderInput={(params) => <TextField {...params} size="small" />}
               shouldDisableDate={(date) => {
                 return moment(date).isBefore(start);
               }}
