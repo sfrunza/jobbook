@@ -21,6 +21,7 @@ import {
 } from './FormFields';
 import axios from 'axios';
 import { useState } from 'react';
+import moment from 'moment';
 
 const MAX_COUNT = 5;
 
@@ -152,7 +153,7 @@ export default function JobForm({ edit = false, job, handleEdit, userId }) {
         initialValues={
           edit
             ? {
-                date: job.date,
+                date: moment(job.date),
                 jobId: job.job_id,
                 workTime: job.work_time,
                 tips: job.tips,
@@ -195,7 +196,7 @@ export default function JobForm({ edit = false, job, handleEdit, userId }) {
                   justifyContent={
                     showForForeman ? 'space-between' : 'space-around'
                   }
-                  alignItems="baseline"
+                  alignItems="center"
                 >
                   <CheckBoxField
                     name="minTime"
