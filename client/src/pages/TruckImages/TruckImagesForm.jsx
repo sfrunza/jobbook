@@ -77,7 +77,7 @@ export default function TruckImagesForm() {
 
   const initialValues = {
     truckId: '',
-    date: moment().format('YYYY-MM-DD'),
+    date: moment(),
     photos: [],
   };
 
@@ -144,22 +144,26 @@ export default function TruckImagesForm() {
             // type="date"
             disablePast
             value={formik.values.date}
-            format="yyyy-mm-dd"
-            onChange={(date) =>
-              formik.setFieldValue('date', moment(date).format('YYYY-MM-DD'))
-            }
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                error={formik.touched.date && Boolean(formik.errors.date)}
-                fullWidth
-                size="small"
-                inputProps={{
-                  ...params.inputProps,
-                }}
-                value={formik.values.date}
-              />
-            )}
+            // format="yyyy-mm-dd"
+            onChange={(date) => formik.setFieldValue('date', date)}
+            slotProps={{
+              textField: {
+                size: 'small',
+                fullWidth: true,
+              },
+            }}
+            // renderInput={(params) => (
+            //   <TextField
+            //     {...params}
+            //     error={formik.touched.date && Boolean(formik.errors.date)}
+            //     fullWidth
+            //     size="small"
+            //     inputProps={{
+            //       ...params.inputProps,
+            //     }}
+            //     value={formik.values.date}
+            //   />
+            // )}
           />
         </Grid>
         <Grid item xs={6}>

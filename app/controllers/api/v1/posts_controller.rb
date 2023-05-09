@@ -25,7 +25,7 @@ class Api::V1::PostsController < ApplicationController
 
       render json: filtered_posts
     else
-      fff = @posts.order("date DESC").limit(20)
+fff = @posts.order("id DESC").limit(20)
       render json: fff
     end
   end

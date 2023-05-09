@@ -34,9 +34,10 @@ export default [
         .notRequired()
         .when('role', {
           is: (value) => value === 'foreman',
-          then: Yup.array()
-            .min(1, 'required at least 1 file')
-            .required(`${image.requiredErrorMsg}`),
+          then: () =>
+            Yup.array()
+              .min(1, 'required at least 1 file')
+              .required(`${image.requiredErrorMsg}`),
         }),
     },
     [['tips', 'tips']]

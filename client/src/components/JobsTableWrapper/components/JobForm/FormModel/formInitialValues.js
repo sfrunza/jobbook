@@ -1,3 +1,4 @@
+import moment from 'moment';
 import submitFormModel from './submitFormModel';
 const {
   formField: {
@@ -16,7 +17,7 @@ const {
 } = submitFormModel;
 
 export default {
-  [date.name]: new Date(),
+  [date.name]: moment(),
   [jobId.name]: '',
   [workTime.name]: '',
   [tips.name]: '',
