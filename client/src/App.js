@@ -10,7 +10,8 @@ import General from 'pages/Employee/General';
 import UserJobs from 'pages/Employee/Jobs';
 import FindJob from 'pages/FindJob';
 import Trucks from 'pages/Trucks';
-import TruckImages from 'pages/TruckImages/TruckImages';
+import TotalHours from 'pages/TotalHours';
+import TruckImages from 'pages/TruckImages';
 import { useSelector } from 'store';
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
             <Route path="/employees/:id/jobs" element={<UserJobs />} />
             <Route path="/find-job" element={<FindJob />} />
             <Route path="/trucks" element={<Trucks />} />
+            <Route path="/total-hours" element={<TotalHours />} />
           </>
         )}
 

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import { toast } from 'react-hot-toast';
 import { useSWRConfig } from 'swr';
@@ -7,7 +7,7 @@ import { useSelector } from 'store';
 import axios from 'axios';
 import { useSearchParams } from 'react-router-dom';
 
-const Image = ({ imageRef, open, image, jobId, userId }) => {
+const Image = React.forwardRef(({ open, image, jobId, userId }, ref) => {
   const { user } = useSelector((state) => state.auth);
   const { mutate } = useSWRConfig();
   const [loading, setLoading] = useState(false);
@@ -42,7 +42,7 @@ const Image = ({ imageRef, open, image, jobId, userId }) => {
   return (
     <Box display="flex" flexDirection="column" alignItems="center" gap={0.5}>
       <Box
-        ref={imageRef}
+        ref={ref}
         onClick={open}
         component="img"
         width={40}
@@ -83,6 +83,6 @@ const Image = ({ imageRef, open, image, jobId, userId }) => {
       </LoadingButton>
     </Box>
   );
-};
+});
 
 export default Image;

@@ -1,17 +1,13 @@
 import Grid from '@mui/material/Grid';
 import Fixed from 'layouts/Fixed';
 import Container from 'components/Container';
-// import Header from './Header';
 import Card from '@mui/material/Card';
-import { useSelector } from 'store';
 import TruckForm from './components/TruckForm';
 import TruckList from './components/TruckList';
 import { useState } from 'react';
-// import Divider from '@mui/material/Divider';
 import PageHeader from 'components/PageHeader';
 
 export default function Trucks() {
-  const { user } = useSelector((state) => state.auth);
   const [selectedTruck, setSelectedTruck] = useState(null);
 
   const selectTruck = (truck) => {

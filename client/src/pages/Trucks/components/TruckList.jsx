@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import useSWR from 'swr';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
@@ -12,7 +11,7 @@ const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
 export default function TruckList({ selectTruck }) {
   const { mutate } = useSWRConfig();
-  const { data, loading, error } = useSWR('/api/v1/trucks', fetcher);
+  const { data, isLoading, error } = useSWR('/api/v1/trucks', fetcher);
   //   const [isDeleting, setIsDeleting] = useState(false);
 
   const deleteTruck = (id) => {
@@ -43,7 +42,7 @@ export default function TruckList({ selectTruck }) {
           <div>failed to load</div>
         </Box>
       )}
-      {!data && <Spinner withText />}
+      {isLoading && <Spinner withText />}
       {data &&
         data.map((truck, i) => {
           return (

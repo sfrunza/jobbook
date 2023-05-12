@@ -27,6 +27,7 @@ Rails.application.routes.draw do
         # get "/filtered_jobs", :to => "user_jobs#filtered_jobs", as: "filtered_jobs"
       end
 
+resources :user_hours
       # resources :trucks
       # resources :posts
 
