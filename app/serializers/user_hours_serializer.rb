@@ -3,7 +3,7 @@ class UserHoursSerializer < ActiveModel::Serializer
 
   def total_hours
     range = @instance_options[:range]
-    sum(object.jobs.where(:created_at => range))
+sum(object.jobs.where(:date => range))
   end
 
   def sum(array)

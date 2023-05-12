@@ -93,7 +93,7 @@ export default function TruckImagesForm() {
     onSubmit: (values, action) => {
       const post = {
         truck_id: values.truckId,
-        date: values.date,
+        date: moment(values.date).format('YYYY-MM-DD'),
         user_id: user.id,
       };
 

@@ -8,6 +8,7 @@ import toast from 'react-hot-toast';
 import JobForm from '../JobForm';
 import { useSearchParams } from 'react-router-dom';
 import axios from 'axios';
+import moment from 'moment';
 
 export default function EditDialog({ job, userId }) {
   const [open, setOpen] = React.useState(false);
@@ -27,7 +28,7 @@ export default function EditDialog({ job, userId }) {
 
   async function handleEdit(values, actions) {
     const data = {
-      date: values.date,
+      date: moment(values.date).format('YYYY-MM-DD'),
       job_id: values.jobId,
       work_time: values.workTime,
       tips: values.tips,
