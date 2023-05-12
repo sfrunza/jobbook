@@ -43,7 +43,6 @@ export default function DatePickerField(props) {
         minDate={user?.admin ? '' : moment(yesterday)}
         name="date"
         value={value}
-        // format="MM/DD/YYYY"
         onChange={(date) => setValue(date)}
         slotProps={{
           textField: {

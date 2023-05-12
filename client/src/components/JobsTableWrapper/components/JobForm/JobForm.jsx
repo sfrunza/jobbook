@@ -88,7 +88,7 @@ export default function JobForm({ edit = false, job, handleEdit, userId }) {
 
   function _submitForm(values, actions) {
     const data = {
-      date: values.date,
+      date: moment(values.date).format('YYYY-MM-DD'),
       job_id: values.jobId,
       work_time: values.workTime,
       tips: values.tips,
