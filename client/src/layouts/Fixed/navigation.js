@@ -8,6 +8,10 @@ const pages = [
     href: '/employees',
   },
   {
+    title: 'Total Hours',
+    href: '/total-hours',
+  },
+  {
     title: 'Find Job',
     href: '/find-job',
   },

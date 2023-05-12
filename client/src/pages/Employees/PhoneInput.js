@@ -26,7 +26,7 @@ export default function PhoneInput(props) {
       <OutlinedInput
         {...field}
         {...props}
-        type="text"
+        type="tel"
         error={Boolean(meta.touched && meta.error)}
         inputComponent={TextMaskCustom}
       />

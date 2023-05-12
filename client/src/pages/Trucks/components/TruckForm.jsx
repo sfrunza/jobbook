@@ -4,7 +4,6 @@ import toast from 'react-hot-toast';
 import { Formik, Form } from 'formik';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
 import { LoadingButton } from '@mui/lab';
 import axios from 'axios';
 import Button from '@mui/material/Button';
@@ -15,12 +14,6 @@ const validationSchema = Yup.object().shape({
 
 export default function TruckForm({ selectedTruck, resetForm }) {
   const { mutate } = useSWRConfig();
-
-  //   const initialValues = {
-  //     name: selectedTruck ? selectedTruck.name : '',
-  //   };
-
-  // console.log(selectedTruck);
 
   function _submitForm(values, actions) {
     axios

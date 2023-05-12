@@ -56,7 +56,7 @@ export default function NewUserForm({ handleClose }) {
       .then((res) => {
         if (res.data.status === 'created') {
           toast.success(res.data.message);
-          mutate('/api/v1/filter_users?&role=all&search=');
+          mutate('/api/v1/filter_users?&role=active&search=');
           actions.setSubmitting(false);
           actions.resetForm();
           handleClose();
@@ -170,6 +170,7 @@ export default function NewUserForm({ handleClose }) {
                     size="small"
                     id="email"
                     name="email"
+                    type="email"
                     value={values.email}
                     onChange={handleChange}
                     error={Boolean(touched.email && errors.email)}

@@ -43,7 +43,7 @@ export default function ImagesGallery({ jobId, userId }) {
             >
               {({ ref, open }) => (
                 <Image
-                  imageRef={ref}
+                  ref={ref}
                   open={open}
                   image={image}
                   jobId={jobId}
