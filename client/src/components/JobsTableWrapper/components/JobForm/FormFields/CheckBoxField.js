@@ -30,7 +30,7 @@ export default function CheckBoxField(props) {
       {...field}
       onChange={handleChnage}
       checked={field.value}
-      control={<Checkbox />}
+      control={<Checkbox id={field.name} />}
       label={
         <Box
           component="label"

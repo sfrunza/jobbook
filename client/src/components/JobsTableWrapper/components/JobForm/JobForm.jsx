@@ -112,20 +112,19 @@ export default function JobForm({ edit = false, job, handleEdit, userId }) {
             .all(filesRequestArray(res.data.job.id))
             .then(
               axios.spread((...responses) => {
-                // console.log(responses);
                 mutate(
                   `/api/v1/users/${userId}/user_jobs?start=${start}&end=${end}`
                 );
                 mutate(`/api/v1/users/${userId}/available_months`);
                 toast.success(res.data.message);
                 setUploadedFiles([]);
+                actions.resetForm();
               })
             )
             .catch((errors) => {
               console.log(errors);
             });
 
-          actions.resetForm();
         } else {
           toast.error('Something went wrong');
         }

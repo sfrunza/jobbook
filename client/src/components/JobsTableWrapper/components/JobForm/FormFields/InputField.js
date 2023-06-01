@@ -28,14 +28,16 @@ export default function InputField(props) {
         {label}
       </Box>
       <StyledTextField
-        {...field}
-        {...rest}
+        name={field.name}
+        id={field.name}
         size="small"
         type="text"
         value={field.value ? field.value : ''}
         multiline={field.name === 'comments'}
         rows={2}
         error={meta.touched && meta.error && true}
+        {...field}
+        {...rest}
       />
     </div>
   );
