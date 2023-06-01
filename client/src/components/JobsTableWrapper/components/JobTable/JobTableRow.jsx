@@ -116,14 +116,12 @@ export default function JobTableRow(props) {
             {job.comments}
           </TableCell>
         )}
-        {user?.admin && (
-          <TableCell align="center" sx={{ borderBottom: 'none' }}>
-            <Box sx={{ display: 'flex', justifyContent: 'center', gap: 1 }}>
-              <EditDialog job={job} userId={userId} />
-              <DeleteDialog jobId={job.id} userId={userId} />
-            </Box>
-          </TableCell>
-        )}
+        <TableCell align="center" sx={{ borderBottom: 'none' }}>
+          <Box sx={{ display: 'flex', justifyContent: 'center', gap: 1 }}>
+            <EditDialog job={job} userId={userId} />
+            <DeleteDialog jobId={job.id} userId={userId} />
+          </Box>
+        </TableCell>
       </TableRow>
       <TableRow>
         <TableCell

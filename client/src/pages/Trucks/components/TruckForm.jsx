@@ -92,6 +92,7 @@ export default function TruckForm({ selectedTruck, resetForm }) {
               alignItems="end"
             >
               <TextField
+                id="name"
                 size="small"
                 name="name"
                 placeholder="EX. Truck 1"

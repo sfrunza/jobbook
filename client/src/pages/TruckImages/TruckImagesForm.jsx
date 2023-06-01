@@ -150,6 +150,8 @@ export default function TruckImagesForm() {
               textField: {
                 size: 'small',
                 fullWidth: true,
+                readOnly: true,
+                id: 'date',
               },
             }}
             // renderInput={(params) => (

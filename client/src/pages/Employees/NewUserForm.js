@@ -219,11 +219,7 @@ export default function NewUserForm({ handleClose }) {
                   />
                 </Grid>
                 <Grid item xs={12} md={12}>
-                  <Box
-                    component="label"
-                    htmlFor="roleNames"
-                    sx={{ fontSize: 14, fontWeight: 500 }}
-                  >
+                  <Box component="span" sx={{ fontSize: 14, fontWeight: 500 }}>
                     Roles
                   </Box>
                   <RoleSelectInput

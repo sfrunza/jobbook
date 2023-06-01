@@ -33,6 +33,7 @@ function SelectField(props) {
       <StyledTextField
         {...rest}
         {...field}
+        id={field.name}
         select
         fullWidth
         size="small"

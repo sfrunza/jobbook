@@ -50,9 +50,7 @@ export default function JobTable({
             {showForForeman && (
               <StyledTableCell align="center">Comments</StyledTableCell>
             )}
-            {user?.admin && (
-              <StyledTableCell align="center">Actions</StyledTableCell>
-            )}
+            <StyledTableCell align="center">Actions</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -81,7 +79,7 @@ export default function JobTable({
             {/* <StyledTableCell align="center" /> */}
             {showForForeman && <StyledTableCell align="center" />}
             {showForForeman && <StyledTableCell align="center" />}
-            {user?.admin && <StyledTableCell align="center" />}
+            <StyledTableCell align="center" />
           </TableRow>
         </TableFooter>
       </Table>
