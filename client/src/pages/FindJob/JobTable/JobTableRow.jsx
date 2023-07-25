@@ -100,7 +100,7 @@ export default function JobTableRow(props) {
             ))}
           </Box>
         </TableCell>
-        <TableCell align="center" sx={{ borderBottom: 'none' }}>
+        <TableCell align="center" sx={{ borderBottom: 'none', fontSize: 10 }}>
           {job.comments}
         </TableCell>
         <TableCell align="center" sx={{ borderBottom: 'none' }}>

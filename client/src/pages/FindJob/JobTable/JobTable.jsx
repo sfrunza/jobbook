@@ -5,7 +5,6 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import TableFooter from '@mui/material/TableFooter';
 import { styled } from '@mui/material/styles';
 import JobTableRow from './JobTableRow';
 import JobTableSkeleton from './JobTableSkeleton';

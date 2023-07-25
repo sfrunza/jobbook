@@ -112,7 +112,7 @@ export default function JobTableRow(props) {
           </TableCell>
         )}
         {showForForeman && (
-          <TableCell align="center" sx={{ borderBottom: 'none' }}>
+          <TableCell align="center" sx={{ borderBottom: 'none', fontSize: 10 }}>
             {job.comments}
           </TableCell>
         )}

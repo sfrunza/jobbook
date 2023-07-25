@@ -1,6 +1,6 @@
 import { useField } from 'formik';
 import Box from '@mui/material/Box';
-import { Checkbox, FormControlLabel, Switch, Typography } from '@mui/material';
+import { Checkbox, FormControlLabel } from '@mui/material';
 
 export default function CheckBoxField(props) {
   const { errorText, label, setFieldValue, ...rest } = props;

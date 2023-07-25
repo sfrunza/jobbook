@@ -1,8 +1,7 @@
 import { responsiveFontSizes } from '@mui/material';
 import { createTheme } from '@mui/material/styles';
 import shadows from './shadows';
-import { light, dark } from './palette';
-import { alpha } from '@mui/material/styles';
+import { light } from './palette';
 
 const getTheme = (mode, themeToggler) =>
   responsiveFontSizes(
@@ -17,58 +16,6 @@ const getTheme = (mode, themeToggler) =>
         drawer: 1300,
       },
       components: {
-        // MuiButton: {
-        //   styleOverrides: {
-        //     root: {
-        //       fontWeight: 600,
-        //     },
-        //     containedSecondary: mode === 'light' ? { color: 'white' } : {},
-        //   },
-        // },
-        // MuiIconButton: {
-        //   styleOverrides: {
-        //     root: {
-        //       backgroundColor: light.background.level2,
-        //     },
-        //   },
-        // },
-        // MuiTypography: {
-        //   styleOverrides: {
-        //     root: {
-        //       fontWeight: 500,
-        //       // borderRadius: 18,
-        //     },
-        //     containedSecondary: mode === 'light' ? { color: 'white' } : {},
-        //   },
-        // },
-        // MuiInputBase: {
-        //   styleOverrides: {
-        //     root: {
-        //       borderRadius: 12,
-        //       '&.Mui-focused': {
-        //         boxShadow: `${alpha(light.primary.main, 0.15)} 0 0 0 2px`,
-        //         borderColor: light.primary.main,
-        //       },
-        //     },
-        //   },
-        // },
-        // MuiOutlinedInput: {
-        //   styleOverrides: {
-        //     root: {
-        //       borderRadius: 12,
-        //     },
-        //     input: {
-        //       borderRadius: 12,
-        //     },
-        //   },
-        // },
-        // MuiCard: {
-        //   styleOverrides: {
-        //     root: {
-        //       borderRadius: 12,
-        //     },
-        //   },
-        // },
         MuiTooltip: {
           styleOverrides: {
             popper: {

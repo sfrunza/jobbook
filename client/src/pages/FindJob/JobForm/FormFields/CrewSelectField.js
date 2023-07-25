@@ -35,10 +35,10 @@ export default function CrewSelectField(props) {
         {label}
       </Box>
       <Select
-        {...field}
-        {...rest}
         multiple
-        input={<OutlinedInput size="small" {...field} {...rest} />}
+        input={
+          <OutlinedInput id={field.name} size="small" {...field} {...rest} />
+        }
         renderValue={(selected) => (
           <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
             {selected.map((value) => (

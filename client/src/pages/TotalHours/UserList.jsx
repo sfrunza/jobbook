@@ -13,10 +13,21 @@ import {
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
-export default function UserList({ month }) {
+export default function UserList({ month, filterData }) {
   const [sortType, setSortType] = useState('up');
+  // const { data, isLoading, error } = useSWR(
+  //   `/api/v1/user_hours?month=${moment(month).format('YYYY-MM-01')}`,
+  //   fetcher
+  // );
+
   const { data, isLoading, error } = useSWR(
-    `/api/v1/user_hours?month=${moment(month).format('YYYY-MM-01')}`,
+    filterData.hasOwnProperty('start') && filterData.hasOwnProperty('end')
+      ? `/api/v1/user_hours?start=${moment(filterData.start).format(
+          'YYYY-MM-DD'
+        )}&end=${moment(filterData.end).format('YYYY-MM-DD')}`
+      : month
+      ? `/api/v1/user_hours?month=${moment(month).format('YYYY-MM-01')}`
+      : null,
     fetcher
   );
 

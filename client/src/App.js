@@ -12,6 +12,9 @@ import FindJob from 'pages/FindJob';
 import Trucks from 'pages/Trucks';
 import TotalHours from 'pages/TotalHours';
 import TruckImages from 'pages/TruckImages';
+// import Articles from 'pages/Articles/Articles';
+import OnTheJob from 'pages/OnTheJob/OnTheJob';
+import Lesson from 'pages/Lesson/Lesson';
 import { useSelector } from 'store';
 
 function App() {
@@ -26,6 +29,9 @@ function App() {
 
       <Route element={<PrivateRoute />}>
         <Route path="/dashboard" element={<Jobs />} />
+        {/* <Route path="/articles" element={<Articles />} /> */}
+        <Route path="/on-the-job" element={<OnTheJob />} />
+        <Route path="/on-the-job/:slug" element={<Lesson />} />
         {(user?.admin || user?.role_names.includes('driver')) && (
           <Route path="/truck-photos" element={<TruckImages />} />
         )}

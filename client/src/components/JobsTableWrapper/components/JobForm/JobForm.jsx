@@ -190,18 +190,12 @@ export default function JobForm({ edit = false, job, handleEdit, userId }) {
                   fullWidth
                   data={timeArray}
                 />
-                <Stack
-                  direction="row"
-                  justifyContent={
-                    showForForeman ? 'space-between' : 'space-around'
-                  }
-                  alignItems="center"
-                >
-                  <CheckBoxField
+                <Stack direction="row" gap={4} alignItems="center">
+                  {/* <CheckBoxField
                     name="minTime"
                     label="Min 5h?"
                     setFieldValue={setFieldValue}
-                  />
+                  /> */}
                   <CheckBoxField
                     name="extraHour"
                     label="Extra 1h?"
@@ -211,7 +205,6 @@ export default function JobForm({ edit = false, job, handleEdit, userId }) {
                     <SelectField
                       name="boxes"
                       label="TV Box"
-                      // fullWidth
                       data={[1, 2, 3, 4, 5]}
                     />
                   )}

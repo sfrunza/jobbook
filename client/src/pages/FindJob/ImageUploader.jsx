@@ -64,7 +64,6 @@ const ImageUploader = ({ jobId, userId }) => {
           sx={{
             border: '1px',
             borderStyle: 'dashed',
-            height: '65%',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
