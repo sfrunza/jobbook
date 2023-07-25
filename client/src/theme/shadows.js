@@ -1,7 +1,4 @@
-import { alpha } from '@mui/material/styles';
 const shadows = (themeMode = 'light') => {
-  const rgb = themeMode === 'light' ? '#8c98a4' : '#000000';
-
   return [
     'none',
     '2px 4px 12px rgb(0 0 0 / 8%)',

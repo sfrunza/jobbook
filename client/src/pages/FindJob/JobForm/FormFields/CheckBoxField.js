@@ -1,6 +1,6 @@
 import { useField } from 'formik';
 import Box from '@mui/material/Box';
-import { Checkbox, FormControlLabel, Switch, Typography } from '@mui/material';
+import { Checkbox, FormControlLabel } from '@mui/material';
 
 export default function CheckBoxField(props) {
   const { errorText, label, setFieldValue, ...rest } = props;
@@ -30,7 +30,7 @@ export default function CheckBoxField(props) {
       {...field}
       onChange={handleChnage}
       checked={field.value}
-      control={<Checkbox />}
+      control={<Checkbox id={field.name} />}
       label={
         <Box
           component="label"
@@ -40,7 +40,7 @@ export default function CheckBoxField(props) {
           {label}
         </Box>
       }
-      labelPlacement="start"
+      labelPlacement="top"
       sx={{ m: 0 }}
     />
   );

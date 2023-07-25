@@ -1,41 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useField } from 'formik';
-import Grid from '@mui/material/Grid';
-import TextField from '@mui/material/TextField';
-import { styled } from '@mui/material/styles';
+// import TextField from '@mui/material/TextField';
+// import { styled } from '@mui/material/styles';
 import { DesktopDatePicker } from '@mui/x-date-pickers';
-import moment from 'moment';
 import Box from '@mui/material/Box';
-
-const StyledTextField = styled((props) => <TextField {...props} />)(
-  ({ theme }) => ({
-    '& .MuiOutlinedInput-root': {
-      color: theme.palette.text.secondary,
-      backgroundColor: theme.palette.background.paper,
-    },
-  })
-);
 
 export default function DatePickerField(props) {
   const [field, meta, helper] = useField(props);
-  const { touched, error } = meta;
+  // const { touched, error } = meta;
   const { setValue } = helper;
-  const isError = touched && Boolean(error);
+  // const isError = touched && Boolean(error);
   const { value } = field;
   // const [selectedDate, setSelectedDate] = useState(new Date());
   const { label, ...rest } = props;
-
-  // useEffect(() => {
-  //   if (value) {
-  //     const date = new Date(value);
-  //     setSelectedDate(date);
-  //   }
-  // }, [value]);
-
-  function _onChange(date) {
-    const newDate = new Date(date);
-    setValue(moment(newDate).format('YYYY-MM-DD'));
-  }
 
   return (
     <div>
@@ -49,27 +26,17 @@ export default function DatePickerField(props) {
       <DesktopDatePicker
         {...field}
         {...rest}
-        disablePast
         name="date"
-        value={value || ''}
-        format="yyyy-mm-dd"
-        onChange={_onChange}
-        InputAdornmentProps={{
-          position: 'end',
-          variant: 'standard',
-          size: 'large',
+        value={value}
+        onChange={(date) => setValue(date)}
+        slotProps={{
+          textField: {
+            size: 'small',
+            fullWidth: true,
+            readOnly: true,
+            id: 'date',
+          },
         }}
-        renderInput={(params) => (
-          <StyledTextField
-            {...params}
-            error={isError}
-            fullWidth
-            size="small"
-            inputProps={{
-              ...params.inputProps,
-            }}
-          />
-        )}
       />
     </div>
   );

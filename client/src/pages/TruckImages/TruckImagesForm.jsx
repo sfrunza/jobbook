@@ -27,7 +27,7 @@ export default function TruckImagesForm() {
   const startParams = searchParams.get('start');
   const endParams = searchParams.get('end');
 
-  const { data: trucks, loading, error } = useSWR('/api/v1/trucks', fetcher);
+  const { data: trucks } = useSWR('/api/v1/trucks', fetcher);
 
   const { user } = useSelector((state) => state.auth);
   const [uploadedFiles, setUploadedFiles] = useState([]);

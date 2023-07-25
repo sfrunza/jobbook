@@ -186,8 +186,8 @@ export default function General() {
                     </Grid>
                     <Grid item xs={12} md={12}>
                       <Box
-                        component="label"
-                        htmlFor="roleNames"
+                        // component="label"
+                        // htmlFor="roleNames"
                         sx={{ fontSize: 14, fontWeight: 500 }}
                       >
                         Roles

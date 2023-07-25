@@ -18,6 +18,7 @@ import {
 } from './FormFields';
 import axios from 'axios';
 import { useState } from 'react';
+import moment from 'moment';
 
 const MAX_COUNT = 5;
 
@@ -72,7 +73,7 @@ export default function JobForm({ edit = false, job, handleEdit, userId }) {
 
   function _submitForm(values, actions) {
     const data = {
-      date: values.date,
+      date: moment(values.date).format('YYYY-MM-DD'),
       job_id: values.jobId,
       work_time: values.workTime,
       tips: values.tips,
@@ -135,7 +136,7 @@ export default function JobForm({ edit = false, job, handleEdit, userId }) {
         initialValues={
           edit
             ? {
-                date: job.date,
+                date: moment(job.date),
                 jobId: job.job_id,
                 workTime: job.work_time,
                 tips: job.tips,
@@ -150,7 +151,7 @@ export default function JobForm({ edit = false, job, handleEdit, userId }) {
         onSubmit={_handleSubmit}
       >
         {({ isSubmitting, values, setFieldValue }) => {
-          console.log(values);
+          // console.log(values);
           return (
             <Form autoComplete="off">
               <Stack spacing={2}>
@@ -163,7 +164,11 @@ export default function JobForm({ edit = false, job, handleEdit, userId }) {
                   fullWidth
                   data={timeArray}
                 />
-                <Stack direction="row" gap={4}>
+                <Stack
+                  direction="row"
+                  justifyContent="space-around"
+                  alignItems="center"
+                >
                   <CheckBoxField
                     name="minTime"
                     label="Min 5h?"

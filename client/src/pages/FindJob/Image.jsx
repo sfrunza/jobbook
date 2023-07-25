@@ -62,7 +62,6 @@ const Image = ({ imageRef, open, image, jobId, userId }) => {
             fontSize: 10,
             minWidth: 54,
             width: 'fit-content',
-            minWidth: 'unset',
           }}
           disableElevation
         >

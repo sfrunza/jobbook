@@ -1,18 +1,7 @@
-import PropTypes from 'prop-types';
 import { at } from 'lodash';
 import { useField } from 'formik';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
-import { styled } from '@mui/material/styles';
-
-const StyledTextField = styled((props) => <TextField {...props} />)(
-  ({ theme }) => ({
-    '& .MuiOutlinedInput-root': {
-      color: theme.palette.text.secondary,
-      backgroundColor: theme.palette.background.paper,
-    },
-  })
-);
 
 function SelectField(props) {
   const { label, data, ...rest } = props;
@@ -30,7 +19,7 @@ function SelectField(props) {
       >
         {label}
       </Box>
-      <StyledTextField
+      <TextField
         {...rest}
         {...field}
         id={field.name}
@@ -49,17 +38,9 @@ function SelectField(props) {
             {item}
           </option>
         ))}
-      </StyledTextField>
+      </TextField>
     </div>
   );
 }
-
-SelectField.defaultProps = {
-  data: [],
-};
-
-SelectField.propTypes = {
-  data: PropTypes.array.isRequired,
-};
 
 export default SelectField;

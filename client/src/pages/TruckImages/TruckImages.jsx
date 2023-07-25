@@ -30,7 +30,7 @@ const TruckImages = () => {
     }
   }, []);
 
-  const { data, isLoading, error } = useSWR(
+  const { data, isLoading } = useSWR(
     `/api/v1/posts?truck=${truckParams}&start=${startParams}&end=${endParams}`,
     fetcher
   );

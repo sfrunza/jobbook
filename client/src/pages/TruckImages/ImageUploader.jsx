@@ -68,7 +68,7 @@ const ImageUploader = ({ postId }) => {
           sx={{
             border: '1px',
             borderStyle: 'dashed',
-            height: '65%',
+            // height: '65%',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',

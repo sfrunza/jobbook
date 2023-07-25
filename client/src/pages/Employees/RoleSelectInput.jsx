@@ -8,7 +8,7 @@ import { useField } from 'formik';
 import { at } from 'lodash';
 
 export default function RoleSelectInput(props) {
-  const { id, name, setFieldValue, initVal } = props;
+  const { setFieldValue, initVal } = props;
   const [roles, setRoles] = React.useState(initVal || []);
   const [field, meta] = useField(props);
 

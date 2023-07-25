@@ -62,7 +62,7 @@ const Image = ({ imageRef, open, image, postId }) => {
           fontSize: 10,
           minWidth: 54,
           width: 'fit-content',
-          minWidth: 'unset',
+          // minWidth: 'unset',
         }}
         disableElevation
       >

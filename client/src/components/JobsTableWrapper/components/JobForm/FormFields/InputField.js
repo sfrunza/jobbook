@@ -2,17 +2,6 @@ import React from 'react';
 import { useField } from 'formik';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import { styled } from '@mui/material/styles';
-
-const StyledTextField = styled((props) => <TextField {...props} />)(
-  ({ theme }) => ({
-    '& .MuiOutlinedInput-root': {
-      color: theme.palette.text.secondary,
-      backgroundColor: theme.palette.background.paper,
-      alignItems: 'baseline',
-    },
-  })
-);
 
 export default function InputField(props) {
   const { errorText, label, ...rest } = props;
@@ -27,7 +16,7 @@ export default function InputField(props) {
       >
         {label}
       </Box>
-      <StyledTextField
+      <TextField
         name={field.name}
         id={field.name}
         size="small"
