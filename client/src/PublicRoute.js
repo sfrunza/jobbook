@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  Navigate,
-  useLocation,
-  Outlet,
-  Route,
-  Redirect,
-} from 'react-router-dom';
+import { Navigate, useLocation, Outlet } from 'react-router-dom';
 import { useSelector } from 'store';
 import Spinner from 'components/Spinner';
 
