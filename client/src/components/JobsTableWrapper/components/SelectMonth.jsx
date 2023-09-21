@@ -5,7 +5,6 @@ import Stack from '@mui/material/Stack';
 import Skeleton from '@mui/material/Skeleton';
 import useSWR from 'swr';
 import { DesktopDatePicker } from '@mui/x-date-pickers';
-import moment from 'moment';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 
@@ -72,16 +71,15 @@ export default function SelectMonth({
               label="From"
               value={start}
               onChange={(d) => {
-                // let formattedDate = moment(new Date(d)).format('YYYY-MM-DD');
                 setStart(d);
               }}
               slotProps={{
                 textField: {
                   size: 'small',
                   fullWidth: true,
+                  readOnly: true,
                 },
               }}
-              // renderInput={(params) => <TextField {...params} size="small" />}
             />
           </div>
           <div>
@@ -89,16 +87,15 @@ export default function SelectMonth({
               label="To"
               value={end}
               onChange={(d) => {
-                // let formattedDate = moment(new Date(d)).format('YYYY-MM-DD');
                 setEnd(d);
               }}
               slotProps={{
                 textField: {
                   size: 'small',
                   fullWidth: true,
+                  readOnly: true,
                 },
               }}
-              // renderInput={(params) => <TextField {...params} size="small" />}
             />
           </div>
           <div>
