@@ -35,15 +35,12 @@ export default function ImagesGallery({ jobId, userId }) {
             <Item
               key={image.id}
               original={image.image.url}
-              cropped
-              // width="960"
-              // height="1280"
-              // width="1024"
-              // height="768"
+              width="960"
+              height="1280"
             >
               {({ ref, open }) => (
                 <Image
-                  ref={ref}
+                  imageRef={ref}
                   open={open}
                   image={image}
                   jobId={jobId}

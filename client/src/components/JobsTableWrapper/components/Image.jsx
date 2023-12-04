@@ -1,15 +1,12 @@
 import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import { toast } from 'react-hot-toast';
-import { useSWRConfig } from 'swr';
+import { mutate } from 'swr';
 import { LoadingButton } from '@mui/lab';
-import { useSelector } from 'store';
 import axios from 'axios';
 import { useSearchParams } from 'react-router-dom';
 
-const Image = React.forwardRef(({ open, image, jobId, userId }, ref) => {
-  const { user } = useSelector((state) => state.auth);
-  const { mutate } = useSWRConfig();
+const Image = ({ open, image, jobId, userId, imageRef }) => {
   const [loading, setLoading] = useState(false);
 
   const [searchParams, setSearchParams] = useSearchParams();
@@ -42,11 +39,11 @@ const Image = React.forwardRef(({ open, image, jobId, userId }, ref) => {
   return (
     <Box display="flex" flexDirection="column" alignItems="center" gap={0.5}>
       <Box
-        ref={ref}
+        ref={imageRef}
         onClick={open}
         component="img"
-        width={40}
-        height={40}
+        width={56}
+        height={60}
         src={image.image.url}
         key={image.id}
         sx={{ objectFit: 'cover', '&:hover': { cursor: 'pointer' } }}
@@ -83,6 +80,6 @@ const Image = React.forwardRef(({ open, image, jobId, userId }, ref) => {
       </LoadingButton>
     </Box>
   );
-});
+};
 
 export default Image;
