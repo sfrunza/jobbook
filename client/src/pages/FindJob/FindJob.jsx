@@ -2,8 +2,6 @@ import { useState, useRef } from 'react';
 import Fixed from 'layouts/Fixed';
 import Container from 'components/Container';
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
 import InputAdornment from '@mui/material/InputAdornment';
 import Card from '@mui/material/Card';
 import TextField from '@mui/material/TextField';
@@ -17,18 +15,21 @@ const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
 const FindJob = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [query, setQuery] = useState('');
-  const [search, setSearch] = useState('');
+  const [query, setQuery] = useState(searchParams.get('search') || '');
+  const [search, setSearch] = useState(query);
   const queryRef = useRef(null);
 
   const { data, error, isLoading } = useSWR(
-    `/api/v1/find_job?search=${search}`,
+    search.length < 1 ? null : `/api/v1/find_job?search=${search}`,
     fetcher
   );
   const jobs = data?.jobs;
 
   const handleQueryChange = (e) => {
     setQuery(e.target.value);
+    setSearchParams({
+      search: e.target.value,
+    });
     setSearch('');
   };
 

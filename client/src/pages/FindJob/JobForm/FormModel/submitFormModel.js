@@ -40,5 +40,9 @@ export default {
       name: 'image',
       label: 'image',
     },
+    boxes: {
+      name: 'boxes',
+      label: 'TV Box',
+    },
   },
 };

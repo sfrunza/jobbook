@@ -10,6 +10,7 @@ const {
     extraHour,
     minTime,
     image,
+    boxes,
   },
 } = submitFormModel;
 
@@ -23,4 +24,5 @@ export default {
   [extraHour.name]: false,
   [minTime.name]: false,
   [image.name]: null,
+  [boxes.name]: '',
 };

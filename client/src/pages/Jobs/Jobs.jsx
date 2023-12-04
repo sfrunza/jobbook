@@ -6,6 +6,7 @@ import Card from '@mui/material/Card';
 import { useSelector } from 'store';
 import JobsTableWrapper from 'components/JobsTableWrapper';
 import PageHeader from 'components/PageHeader';
+import { Alert, Typography } from '@mui/material';
 
 export default function Jobs() {
   const { user } = useSelector((state) => state.auth);
@@ -15,6 +16,13 @@ export default function Jobs() {
         <PageHeader title="Jobs" />
         <Grid container spacing={2}>
           <Grid item xs={12} md={4}>
+            {user && user.role_names.includes('foreman') && (
+              <Alert severity="error" sx={{ mb: 2 }}>
+                <Typography fontWeight="500" textTransform="uppercase">
+                  Please upload contract and inventory!
+                </Typography>
+              </Alert>
+            )}
             <Card sx={{ p: 2 }}>
               <JobForm userId={user.id} />
             </Card>
@@ -26,4 +34,8 @@ export default function Jobs() {
       </Container>
     </Fixed>
   );
+}
+
+{
+  /* <Alert severity="error">This is an info alert — check it out!</Alert> */
 }

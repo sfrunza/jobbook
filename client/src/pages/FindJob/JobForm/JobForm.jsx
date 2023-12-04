@@ -1,6 +1,6 @@
 import { Formik, Form } from 'formik';
 import toast from 'react-hot-toast';
-import { useSWRConfig } from 'swr';
+import { mutate } from 'swr';
 import validationSchema from './FormModel/validationSchema';
 import formInitialValues from './FormModel/formInitialValues';
 import { LoadingButton } from '@mui/lab';
@@ -28,7 +28,6 @@ const range = (start, stop, step) =>
 const timeArray = [...range(0.25, 20, 0.25)];
 
 export default function JobForm({ edit = false, job, handleEdit, userId }) {
-  const { mutate } = useSWRConfig();
   const currentValidationSchema = validationSchema[0];
   const [searchParams] = useSearchParams();
   const { start, end } = Object.fromEntries([...searchParams]);
@@ -82,6 +81,7 @@ export default function JobForm({ edit = false, job, handleEdit, userId }) {
       teammates: values.teammates,
       extra_hour: values.extraHour,
       min_time: values.minTime,
+      boxes: values.boxes,
     };
 
     const formData = new FormData();
@@ -139,11 +139,12 @@ export default function JobForm({ edit = false, job, handleEdit, userId }) {
                 date: moment(job.date),
                 jobId: job.job_id,
                 workTime: job.work_time,
-                tips: job.tips,
+                tips: job.tips || '',
                 comments: job.comments,
                 teammates: job.teammates,
                 extraHour: job.extra_hour,
                 minTime: job.min_time,
+                boxes: job.boxes || '',
               }
             : formInitialValues
         }
@@ -151,7 +152,6 @@ export default function JobForm({ edit = false, job, handleEdit, userId }) {
         onSubmit={_handleSubmit}
       >
         {({ isSubmitting, values, setFieldValue }) => {
-          // console.log(values);
           return (
             <Form autoComplete="off">
               <Stack spacing={2}>
@@ -164,20 +164,21 @@ export default function JobForm({ edit = false, job, handleEdit, userId }) {
                   fullWidth
                   data={timeArray}
                 />
-                <Stack
-                  direction="row"
-                  justifyContent="space-around"
-                  alignItems="center"
-                >
-                  <CheckBoxField
+                <Stack direction="row" gap={4} alignItems="center">
+                  {/* <CheckBoxField
                     name="minTime"
                     label="Min 5h?"
                     setFieldValue={setFieldValue}
-                  />
+                  /> */}
                   <CheckBoxField
                     name="extraHour"
                     label="Extra 1h?"
                     setFieldValue={setFieldValue}
+                  />
+                  <SelectField
+                    name="boxes"
+                    label="TV Box"
+                    data={[1, 2, 3, 4, 5]}
                   />
                 </Stack>
                 <InputField name="tips" label="C/C Tips" fullWidth />

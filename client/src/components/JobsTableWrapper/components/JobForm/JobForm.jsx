@@ -124,7 +124,6 @@ export default function JobForm({ edit = false, job, handleEdit, userId }) {
             .catch((errors) => {
               console.log(errors);
             });
-
         } else {
           toast.error('Something went wrong');
         }
