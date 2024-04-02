@@ -17,7 +17,7 @@ root.render(
   <Provider store={store}>
     <ThemeProvider theme={getTheme('light')}>
       <BrowserRouter>
-        <LocalizationProvider dateAdapter={AdapterMoment}>
+        <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale="en-us">
           <Routes>
             <Route path="/*" element={<App />} />
           </Routes>

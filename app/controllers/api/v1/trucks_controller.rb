@@ -10,11 +10,6 @@ class Api::V1::TrucksController < ApplicationController
   # GET /trucks/1 or /trucks/1.json
   def show
     @truck = Truck.find(params[:id])
-    # render json: @truck.to_json(
-    #   :include => {
-    #     :posts => { only: [:id, :date, :created_at] },
-    #   },
-    # )
     render json: @truck
   end
 

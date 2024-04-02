@@ -33,11 +33,15 @@ const timeArray = [...range(0.25, 20, 0.25)];
 const tipArray = [...range(5, 300, 5)];
 
 export default function JobForm({ edit = false, job, handleEdit, userId }) {
-  const { user } = useSelector((state) => state.auth);
-  const showForForeman = user?.role_names.includes('foreman');
   const { mutate } = useSWRConfig();
+  const { user } = useSelector((state) => state.auth);
+  const { extraTime } = useSelector((state) => state.settings);
+
+  const showForForeman = user?.role_names.includes('foreman');
+
   const currentValidationSchema =
     edit || !showForForeman ? validationSchema[1] : validationSchema[0];
+
   const [searchParams] = useSearchParams();
   const { start, end } = Object.fromEntries([...searchParams]);
 
@@ -63,7 +67,6 @@ export default function JobForm({ edit = false, job, handleEdit, userId }) {
   };
 
   const handleFileEvent = (e) => {
-    // console.log(e.target.files);
     const chosenFiles = Array.prototype.slice.call(e.target.files);
     handleUploadFiles(chosenFiles);
   };
@@ -95,9 +98,8 @@ export default function JobForm({ edit = false, job, handleEdit, userId }) {
       comments: values.comments,
       user_id: userId,
       teammates: values.teammates,
-      extra_hour: values.extraHour,
-      min_time: values.minTime,
       boxes: values.boxes,
+      extra_time: values.extraTime,
     };
 
     const formData = new FormData();
@@ -157,9 +159,10 @@ export default function JobForm({ edit = false, job, handleEdit, userId }) {
                 tips: job.tips,
                 comments: job.comments,
                 teammates: job.teammates,
-                extraHour: job.extra_hour,
+                hasExtraTime: job.extra_time ? true : false,
                 minTime: job.min_time,
                 boxes: job.boxes,
+                extraTime: job.extra_time,
               }
             : formInitialValues
         }
@@ -190,16 +193,13 @@ export default function JobForm({ edit = false, job, handleEdit, userId }) {
                   data={timeArray}
                 />
                 <Stack direction="row" gap={4} alignItems="center">
-                  {/* <CheckBoxField
-                    name="minTime"
-                    label="Min 5h?"
-                    setFieldValue={setFieldValue}
-                  /> */}
-                  <CheckBoxField
-                    name="extraHour"
-                    label="Extra 1h?"
-                    setFieldValue={setFieldValue}
-                  />
+                  {extraTime && (
+                    <CheckBoxField
+                      name="hasExtraTime"
+                      label={`Extra ${extraTime}hr?`}
+                      setFieldValue={setFieldValue}
+                    />
+                  )}
                   {showForForeman && (
                     <SelectField
                       name="boxes"
@@ -256,7 +256,6 @@ export default function JobForm({ edit = false, job, handleEdit, userId }) {
                       Upload
                       <input
                         hidden
-                        // accept="image/png, image/jpeg"
                         accept="image/*"
                         multiple
                         type="file"

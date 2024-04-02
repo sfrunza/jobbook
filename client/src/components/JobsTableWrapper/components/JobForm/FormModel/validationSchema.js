@@ -26,9 +26,6 @@ export default [
           then: (value) =>
             (value + '').match(/^\d*\.{1}\d*$/) || typeof value === 'number',
         }),
-      // [image.name]: Yup.array()
-      //   .min(1, 'required at least 1 file')
-      //   .required(`${image.requiredErrorMsg}`),
       [role.name]: Yup.string().nullable().required(`${role.requiredErrorMsg}`),
       [image.name]: Yup.array()
         .notRequired()

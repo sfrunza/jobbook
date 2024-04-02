@@ -1,3 +1,4 @@
+import moment from 'moment';
 import submitFormModel from './submitFormModel';
 const {
   formField: {
@@ -7,22 +8,24 @@ const {
     tips,
     comments,
     teammates,
-    extraHour,
-    minTime,
+    hasExtraTime,
+    extraTime,
     image,
+    role,
     boxes,
   },
 } = submitFormModel;
 
 export default {
-  [date.name]: new Date(),
+  [date.name]: moment(),
   [jobId.name]: '',
   [workTime.name]: '',
   [tips.name]: '',
   [comments.name]: '',
   [teammates.name]: [],
-  [extraHour.name]: false,
-  [minTime.name]: false,
-  [image.name]: null,
+  [hasExtraTime.name]: false,
+  [extraTime.name]: null,
+  [image.name]: [],
+  [role.name]: '',
   [boxes.name]: '',
 };

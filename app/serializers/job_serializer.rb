@@ -1,5 +1,5 @@
 class JobSerializer < ActiveModel::Serializer
-  attributes :id, :job_id, :date, :work_time, :tips, :boxes, :comments, :teammates, :user_id, :min_time, :extra_hour, :total_images, :user
+  attributes :id, :job_id, :date, :work_time, :tips, :boxes, :comments, :teammates, :user_id, :extra_time, :total_images, :user
 
   def total_images
     object.images.length
