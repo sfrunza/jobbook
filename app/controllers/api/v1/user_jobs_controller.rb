@@ -8,14 +8,14 @@ class Api::V1::UserJobsController < ApplicationController
       end_date = params[:end]
       date_range = Date.parse(start_date)..Date.parse(end_date)
 
-      @jobs = @user.jobs.where(:date => date_range).order("date DESC")
+      jobs = @user.jobs.where(:date => date_range).order("date DESC")
 
-      @total_jobs = @jobs.length
-      @total_tips = @jobs.sum(:tips)
-      @total_boxes = @jobs.sum(:boxes)
-      @total_hours = sum(@jobs)
-      render json: { total_jobs: @total_jobs, total_hours: @total_hours, total_tips: @total_tips, total_boxes: @total_boxes,
-                     :jobs => ActiveModelSerializers::SerializableResource.new(@jobs, each_serializer: JobSerializer) }
+      total_jobs = jobs.length
+      total_tips = jobs.sum(:tips)
+      total_boxes = jobs.sum(:boxes)
+      total_hours = sum(jobs)
+      render json: { total_jobs: total_jobs, total_hours: total_hours, total_tips: total_tips, total_boxes: total_boxes,
+                     :jobs => ActiveModelSerializers::SerializableResource.new(jobs, each_serializer: JobSerializer) }
     end
   end
 
@@ -25,22 +25,20 @@ class Api::V1::UserJobsController < ApplicationController
       end_date = params[:end]
       date_range = Date.parse(start_date)..Date.parse(end_date)
 
-      @jobs = @user.jobs.where(:date => date_range).order("date DESC")
-      @total_jobs = @jobs.length
-      @total_tips = @jobs.sum(:tips)
-      @total_hours = sum(@jobs)
-      render json: { total_jobs: @total_jobs, total_hours: @total_hours, total_tips: @total_tips, jobs: @jobs }
+      jobs = @user.jobs.where(:date => date_range).order("date DESC")
+      total_jobs = jobs.length
+      total_tips = jobs.sum(:tips)
+      total_hours = sum(jobs)
+      render json: { total_jobs: total_jobs, total_hours: total_hours, total_tips: total_tips, jobs: jobs }
     end
   end
 
   def available_months
     if @user.jobs.length > 0
-      first = Date.parse(@user.jobs.order("date ASC").first.date)
-      last = Date.parse(@user.jobs.order("date ASC").last.date)
-      @months = @user.jobs.map { |job| Date.parse(job.date).strftime("%b %Y") }.uniq
-      @sorted = @months.sort_by { |s| Date.parse s }
+      months = @user.jobs.map { |job| Date.parse(job.date).strftime("%b %Y") }.uniq
+      sorted = months.sort_by { |s| Date.parse s }
 
-      render json: { months: @sorted.reverse }
+      render json: { months: sorted.reverse }
     else
       render json: { months: [] }
     end
@@ -49,7 +47,7 @@ class Api::V1::UserJobsController < ApplicationController
   def sum(array)
     sum = 0
     array.each do |job|
-      extra_time = job.extra_hour ? 1 : 0
+      extra_time = job.extra_time || 0;
       min_time = job.min_time ? 5 : job.work_time
       sum += extra_time + min_time
     end
@@ -103,6 +101,6 @@ class Api::V1::UserJobsController < ApplicationController
   end
 
   def job_params
-    params.fetch(:job, {}).permit(:date, :job_id, :work_time, :tips, :boxes, :comments, :user_id, :extra_hour, :min_time, :teammates => [])
+    params.fetch(:job, {}).permit(:date, :job_id, :work_time, :tips, :boxes, :comments, :user_id, :extra_hour, :min_time, :extra_time, :teammates => [])
   end
 end

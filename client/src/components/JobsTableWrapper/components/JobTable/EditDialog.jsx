@@ -34,9 +34,8 @@ export default function EditDialog({ job, userId }) {
       tips: values.tips,
       comments: values.comments,
       teammates: values.teammates,
-      extra_hour: values.extraHour,
-      min_time: values.minTime,
       boxes: values.boxes,
+      extra_time: values.extraTime,
     };
 
     axios

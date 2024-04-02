@@ -1,8 +1,10 @@
 import { useField } from 'formik';
 import Box from '@mui/material/Box';
 import { Checkbox, FormControlLabel } from '@mui/material';
+import { useSelector } from 'store';
 
 export default function CheckBoxField(props) {
+  const { extraTime } = useSelector((state) => state.settings);
   const { errorText, label, setFieldValue, ...rest } = props;
   const [field] = useField(props);
 
@@ -10,16 +12,13 @@ export default function CheckBoxField(props) {
     const name = e.target.name;
     const value = e.target.checked;
 
-    if (name === 'minTime') {
-      setFieldValue('minTime', value);
+    if (name === 'hasExtraTime') {
+      setFieldValue('hasExtraTime', value);
+
       if (value) {
-        setFieldValue('extraHour', false);
-      }
-    }
-    if (name === 'extraHour') {
-      setFieldValue('extraHour', value);
-      if (value) {
-        setFieldValue('minTime', false);
+        setFieldValue('extraTime', extraTime);
+      } else {
+        setFieldValue('extraTime', null);
       }
     }
   };

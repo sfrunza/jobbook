@@ -23,13 +23,13 @@ const pages = [
     title: 'Truck Photos',
     href: '/truck-photos',
   },
-  // {
-  //   title: 'Articles',
-  //   href: '/articles',
-  // },
   {
     title: 'On The Job',
     href: '/on-the-job',
+  },
+  {
+    title: 'Settings',
+    href: '/settings',
   },
 ];
 

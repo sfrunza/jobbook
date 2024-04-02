@@ -19,6 +19,7 @@ import {
 import axios from 'axios';
 import { useState } from 'react';
 import moment from 'moment';
+import { useSelector } from 'store';
 
 const MAX_COUNT = 5;
 
@@ -31,6 +32,7 @@ export default function JobForm({ edit = false, job, handleEdit, userId }) {
   const currentValidationSchema = validationSchema[0];
   const [searchParams] = useSearchParams();
   const { start, end } = Object.fromEntries([...searchParams]);
+  const { extraTime } = useSelector((state) => state.settings);
 
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [fileLimit, setFileLimit] = useState(false);
@@ -79,13 +81,14 @@ export default function JobForm({ edit = false, job, handleEdit, userId }) {
       comments: values.comments,
       user_id: userId,
       teammates: values.teammates,
-      extra_hour: values.extraHour,
-      min_time: values.minTime,
       boxes: values.boxes,
+      extra_time: values.extraTime,
     };
 
     const formData = new FormData();
     formData.append('image', values.images);
+
+    console.log('findJob', data);
 
     axios
       .post(`/api/v1/users/${userId}/user_jobs`, { job: data })
@@ -142,9 +145,9 @@ export default function JobForm({ edit = false, job, handleEdit, userId }) {
                 tips: job.tips || '',
                 comments: job.comments,
                 teammates: job.teammates,
-                extraHour: job.extra_hour,
-                minTime: job.min_time,
+                hasExtraTime: job.extra_time ? true : false,
                 boxes: job.boxes || '',
+                extraTime: job.extra_time,
               }
             : formInitialValues
         }
@@ -152,6 +155,7 @@ export default function JobForm({ edit = false, job, handleEdit, userId }) {
         onSubmit={_handleSubmit}
       >
         {({ isSubmitting, values, setFieldValue }) => {
+          // console.log('findJob', values);
           return (
             <Form autoComplete="off">
               <Stack spacing={2}>
@@ -165,16 +169,13 @@ export default function JobForm({ edit = false, job, handleEdit, userId }) {
                   data={timeArray}
                 />
                 <Stack direction="row" gap={4} alignItems="center">
-                  {/* <CheckBoxField
-                    name="minTime"
-                    label="Min 5h?"
-                    setFieldValue={setFieldValue}
-                  /> */}
-                  <CheckBoxField
-                    name="extraHour"
-                    label="Extra 1h?"
-                    setFieldValue={setFieldValue}
-                  />
+                  {extraTime && (
+                    <CheckBoxField
+                      name="hasExtraTime"
+                      label={`Extra ${extraTime}hr?`}
+                      setFieldValue={setFieldValue}
+                    />
+                  )}
                   <SelectField
                     name="boxes"
                     label="TV Box"

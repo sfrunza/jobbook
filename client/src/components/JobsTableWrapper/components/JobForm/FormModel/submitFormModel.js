@@ -28,13 +28,9 @@ export default {
       name: 'teammates',
       label: 'Teammates',
     },
-    extraHour: {
-      name: 'extraHour',
+    hasExtraTime: {
+      name: 'hasExtraTime',
       label: 'Exta 1h',
-    },
-    minTime: {
-      name: 'minTime',
-      label: 'Min 5h',
     },
     image: {
       name: 'image',
@@ -49,6 +45,10 @@ export default {
     boxes: {
       name: 'boxes',
       label: 'TV Box',
+    },
+    extraTime: {
+      name: 'extraTime',
+      label: 'Extra Time',
     },
   },
 };

@@ -15,6 +15,7 @@ import TruckImages from 'pages/TruckImages';
 // import Articles from 'pages/Articles/Articles';
 import OnTheJob from 'pages/OnTheJob/OnTheJob';
 import Lesson from 'pages/Lesson/Lesson';
+import Settings from 'pages/Settings';
 import { useSelector } from 'store';
 
 function App() {
@@ -43,6 +44,7 @@ function App() {
             <Route path="/find-job" element={<FindJob />} />
             <Route path="/trucks" element={<Trucks />} />
             <Route path="/total-hours" element={<TotalHours />} />
+            <Route path="/settings" element={<Settings />} />
           </>
         )}
 

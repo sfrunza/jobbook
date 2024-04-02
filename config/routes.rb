@@ -7,6 +7,9 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
+      
+      resources :settings
+
       resources :jobs do
         resources :images
       end
@@ -27,7 +30,7 @@ Rails.application.routes.draw do
         # get "/filtered_jobs", :to => "user_jobs#filtered_jobs", as: "filtered_jobs"
       end
 
-resources :user_hours
+      resources :user_hours
       # resources :trucks
       # resources :posts
 

@@ -68,9 +68,9 @@ export default function JobTableRow(props) {
           /
           <Typography
             component={'span'}
-            color={job.extra_hour ? 'primary' : 'textPrimary'}
+            color={job.extra_time ? 'primary' : 'textPrimary'}
           >
-            {job.extra_hour ? '1' : '*'}
+            {job.extra_time || '*'}
           </Typography>
           /
           <Typography

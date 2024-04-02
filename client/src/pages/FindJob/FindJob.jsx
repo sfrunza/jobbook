@@ -27,9 +27,6 @@ const FindJob = () => {
 
   const handleQueryChange = (e) => {
     setQuery(e.target.value);
-    setSearchParams({
-      search: e.target.value,
-    });
     setSearch('');
   };
 

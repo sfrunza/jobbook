@@ -27,7 +27,7 @@ export default function DatePickerField(props) {
       <DesktopDatePicker
         {...field}
         {...rest}
-        minDate={user?.admin ? '' : moment(yesterday)}
+        minDate={user?.admin ? null : moment(yesterday)}
         name="date"
         id="date"
         value={value}
